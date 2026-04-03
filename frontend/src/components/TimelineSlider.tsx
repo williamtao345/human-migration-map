@@ -1,0 +1,36 @@
+import { Slider } from "@/components/ui/slider";
+import { sliderToYear, yearToSlider, formatYear, getEra } from "@/lib/timeline";
+
+const SLIDER_MIN = 0;
+const SLIDER_MAX = 1000;
+
+export default function TimelineSlider({
+  year,
+  onYearChange,
+}: {
+  year: number;
+  onYearChange: (year: number) => void;
+}) {
+  const sliderValue = Math.round(yearToSlider(year) * SLIDER_MAX);
+
+  return (
+    <div className="h-20 border-t px-8 flex flex-col justify-center gap-1">
+      <Slider
+        min={SLIDER_MIN}
+        max={SLIDER_MAX}
+        value={[sliderValue]}
+        onValueChange={(v) => {
+          const val = Array.isArray(v) ? v[0] : v;
+          onYearChange(sliderToYear(val / SLIDER_MAX));
+        }}
+      />
+      <div className="flex justify-between text-xs text-muted-foreground">
+        <span>65 kya</span>
+        <span className="font-medium text-foreground">
+          {formatYear(year)} — {getEra(year)}
+        </span>
+        <span>1200 CE</span>
+      </div>
+    </div>
+  );
+}
