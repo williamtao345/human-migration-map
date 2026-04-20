@@ -5,26 +5,34 @@ import {
   DrawerTitle,
   DrawerDescription,
 } from "@/components/ui/drawer";
+import type { MigrationEvent } from "@/data/types";
+import { formatYear } from "@/lib/timeline";
 
 export default function EventDrawer({
-  open,
+  event,
   onClose,
 }: {
-  open: boolean;
+  event: MigrationEvent | null;
   onClose: () => void;
 }) {
   return (
-    <Drawer direction="right" open={open} onOpenChange={(o) => !o && onClose()}>
+    <Drawer
+      direction="right"
+      open={event !== null}
+      onOpenChange={(o) => !o && onClose()}
+    >
       <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Event Name</DrawerTitle>
-          <DrawerDescription>Date</DrawerDescription>
-        </DrawerHeader>
-        <div className="p-4">
-          <p className="text-sm text-muted-foreground">
-            Event description will go here.
-          </p>
-        </div>
+        {event && (
+          <>
+            <DrawerHeader>
+              <DrawerTitle>{event.name}</DrawerTitle>
+              <DrawerDescription>{formatYear(event.year)}</DrawerDescription>
+            </DrawerHeader>
+            <div className="p-4">
+              <p className="text-sm leading-relaxed">{event.description}</p>
+            </div>
+          </>
+        )}
       </DrawerContent>
     </Drawer>
   );

@@ -1,4 +1,5 @@
 import type { MigrationRoute } from "./types";
+import { coordOf } from "./locations";
 
 export const routes: MigrationRoute[] = [
   {
@@ -8,22 +9,78 @@ export const routes: MigrationRoute[] = [
     endYear: -50000,
     color: "#e07a3a",
     coordinates: [
-      [40, 10],   // East Africa
-      [45, 15],   // Southern Arabia
-      [35, 32],   // Levant
+      coordOf("omoKibish"),
+      coordOf("djibouti"),
+      coordOf("babElMandeb"),
+      coordOf("southernArabia"),
+      coordOf("easternArabia"),
+      coordOf("levant"),
     ],
   },
   {
     id: "sahul",
     name: "Settlement of Sahul",
-    startYear: -55000,
+    startYear: -50000,
     endYear: -47000,
+    color: "#c49030",
+    coordinates: [
+      coordOf("sunda"),
+      coordOf("wallacea"),
+      coordOf("northernAustralia"),
+    ],
+  },
+  {
+    id: "south-asia",
+    name: "Migration to South & SE Asia",
+    startYear: -55000,
+    endYear: -45000,
     color: "#d4a03c",
     coordinates: [
-      [35, 32],   // Levant
-      [77, 10],   // Southern India
-      [105, 0],   // SE Asia / Sunda
-      [132, -12], // Northern Australia
+      coordOf("levant"),
+      coordOf("mesopotamia"),
+      coordOf("bandarAbbas"),
+      coordOf("gwadar"),
+      coordOf("mumbai"),
+      coordOf("southernIndia"),
+      coordOf("chennai"),
+      coordOf("odishaCoast"),
+      coordOf("dhaka"),
+      coordOf("sittwe"),
+      coordOf("yangon"),
+      coordOf("chumphon"),
+      coordOf("kualaLumpur"),
+      coordOf("sunda"),
+    ],
+  },
+  {
+    id: "east-asia",
+    name: "Migration to East Asia",
+    startYear: -50000,
+    endYear: -40000,
+    color: "#5ba05b",
+    coordinates: [
+      coordOf("gwadar"),
+      coordOf("kabul"),
+      coordOf("samarkand"),
+      coordOf("tibetanPlateauN"),
+      coordOf("westernChina"),
+      coordOf("centralChina"),
+      coordOf("easternChina"),
+    ],
+  },
+  {
+    id: "north-asia",
+    name: "Migration to North Asia",
+    startYear: -40000,
+    endYear: -25000,
+    color: "#7bb85b",
+    coordinates: [
+      coordOf("westernChina"),
+      coordOf("mongolia"),
+      coordOf("nMongolia"),
+      coordOf("centralSiberia"),
+      coordOf("easternSiberia"),
+      coordOf("neSiberia"),
     ],
   },
   {
@@ -33,9 +90,13 @@ export const routes: MigrationRoute[] = [
     endYear: -20000,
     color: "#4a8bc2",
     coordinates: [
-      [35, 32],   // Levant
-      [22, 42],   // Balkans
-      [2, 46],    // Western Europe
+      coordOf("levant"),
+      coordOf("southernTurkey"),
+      coordOf("centralAnatolia"),
+      coordOf("nwTurkey"),
+      coordOf("balkans"),
+      coordOf("northernItaly"),
+      coordOf("westernEurope"),
     ],
   },
   {
@@ -45,9 +106,9 @@ export const routes: MigrationRoute[] = [
     endYear: -7000,
     color: "#6ba3d6",
     coordinates: [
-      [33, 39],   // Central Anatolia
-      [22, 42],   // Balkans
-      [2, 46],    // Central/Western Europe
+      coordOf("centralAnatoliaEEF"),
+      coordOf("balkans"),
+      coordOf("westernEurope"),
     ],
   },
   {
@@ -57,8 +118,8 @@ export const routes: MigrationRoute[] = [
     endYear: -3000,
     color: "#3b6ea0",
     coordinates: [
-      [40, 48],   // Pontic-Caspian Steppe
-      [13, 52],   // Central/Northern Europe
+      coordOf("ponticSteppe"),
+      coordOf("centralEurope"),
     ],
   },
   {
@@ -68,9 +129,9 @@ export const routes: MigrationRoute[] = [
     endYear: -15000,
     color: "#c04040",
     coordinates: [
-      [170, 63],  // NE Siberia
-      [-169, 65], // Bering Strait
-      [-150, 63], // Alaska
+      coordOf("neSiberia"),
+      coordOf("beringStrait"),
+      coordOf("alaska"),
     ],
   },
   {
@@ -80,10 +141,38 @@ export const routes: MigrationRoute[] = [
     endYear: -13000,
     color: "#d45050",
     coordinates: [
-      [-150, 63], // Alaska (same as Beringia end)
-      [-125, 48], // Pacific Northwest
-      [-90, 15],  // Central America
-      [-70, -40], // Southern South America
+      coordOf("alaska"),
+      coordOf("bcCoast"),
+      coordOf("pacificNW"),
+      coordOf("california"),
+      coordOf("wMexicoCoast"),
+      coordOf("oaxaca"),
+      coordOf("guatemala"),
+      coordOf("panama"),
+      coordOf("bogota"),
+      coordOf("quito"),
+      coordOf("lima"),
+      coordOf("bolivia"),
+      coordOf("nArgentina"),
+      coordOf("sArgentina"),
+    ],
+  },
+  {
+    id: "austronesian",
+    name: "Austronesian Expansion",
+    startYear: -3000,
+    endYear: -800,
+    color: "#a070d0",
+    coordinates: [
+      coordOf("easternChina"),
+      coordOf("taiwan"),
+      coordOf("manila"),
+      coordOf("sulawesi"),
+      coordOf("portMoresby"),
+      coordOf("honiara"),
+      coordOf("fiji"),
+      coordOf("tonga"),
+      coordOf("samoa"),
     ],
   },
   {
@@ -93,12 +182,12 @@ export const routes: MigrationRoute[] = [
     endYear: 1200,
     color: "#8b5fc7",
     coordinates: [
-      [-171.8, -13.8], // Samoa
-      [-159.8, -21.2], // Cook Islands
-      [-149.4, -17.7], // Tahiti
-      [-145, -16],     // Tuamotu
-      [-139.5, -9.8],  // Marquesas
-      [-109.3, -27.1], // Rapa Nui
+      coordOf("samoa"),
+      coordOf("cookIslands"),
+      coordOf("tahiti"),
+      coordOf("tuamotu"),
+      coordOf("marquesas"),
+      coordOf("rapaNui"),
     ],
   },
 ];
