@@ -1,9 +1,10 @@
-import { useMemo, useCallback, useState, useEffect } from "react";
-import Map, { Source, Layer, Marker, type MapLayerMouseEvent } from "react-map-gl/maplibre";
+import { useMemo, useCallback, useState, useEffect, useRef } from "react";
+import Map, { Source, Layer, type MapLayerMouseEvent, type MapRef } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { routes } from "@/data/routes";
+import { sites } from "@/data/sites";
 import { locations, type LocationName } from "@/data/locations";
-import type { MigrationRoute } from "@/data/types";
+import type { MigrationRoute, Site } from "@/data/types";
 import type { LineLayerSpecification, StyleSpecification } from "maplibre-gl";
 
 const BASE_STYLE_URL = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
@@ -191,15 +192,63 @@ const lineLayout: LineLayerSpecification["layout"] = {
 
 const HIT_LAYER_SUFFIX = "-hit";
 
+// DOM Markers render once at their literal longitude; GL line layers render in every
+// world copy. Replicate markers across copies so endpoints stay aligned with routes
+// when the map wraps horizontally at low zoom.
+const WORLD_COPY_OFFSETS = [-720, -360, 0, 360, 720];
+
 export default function MapView({
   year,
   onRouteClick,
+  onSiteClick,
 }: {
   year: number;
   onRouteClick?: (route: MigrationRoute) => void;
+  onSiteClick?: (site: Site) => void;
 }) {
-  const [hover, setHover] = useState<{ id: string; x: number; y: number } | null>(null);
+  const [hover, setHover] = useState<
+    { kind: "route" | "site"; id: string; x: number; y: number } | null
+  >(null);
   const [mapStyle, setMapStyle] = useState<StyleSpecification | null>(null);
+  const mapRef = useRef<MapRef | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+
+  const positionElement = useCallback((el: HTMLElement) => {
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+    const lng = Number(el.dataset.lng);
+    const lat = Number(el.dataset.lat);
+    const p = map.project([lng, lat]);
+    el.style.transform = `translate(${p.x}px, ${p.y}px) translate(-50%, -50%)`;
+  }, []);
+
+  const repositionMarkers = useCallback(() => {
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+    const els = overlay.querySelectorAll<HTMLElement>("[data-lng]");
+    els.forEach(positionElement);
+  }, [positionElement]);
+
+  const markerRef = useCallback(
+    (el: HTMLElement | null) => {
+      if (el) positionElement(el);
+    },
+    [positionElement],
+  );
+
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+    repositionMarkers();
+    map.on("move", repositionMarkers);
+    map.on("zoom", repositionMarkers);
+    map.on("resize", repositionMarkers);
+    return () => {
+      map.off("move", repositionMarkers);
+      map.off("zoom", repositionMarkers);
+      map.off("resize", repositionMarkers);
+    };
+  }, [mapStyle, repositionMarkers]);
 
   useEffect(() => {
     let cancelled = false;
@@ -224,6 +273,10 @@ export default function MapView({
     return endpoints.filter((e) => year >= e.year);
   }, [year]);
 
+  const visibleSites = useMemo(() => {
+    return sites.filter((s) => year >= s.year);
+  }, [year]);
+
   const interactiveLayerIds = useMemo(
     () => routeData.map(({ route }) => route.id + HIT_LAYER_SUFFIX),
     [routeData]
@@ -235,23 +288,30 @@ export default function MapView({
     return layerId.slice(0, -HIT_LAYER_SUFFIX.length);
   };
 
+  const isSiteEvent = (e: MapLayerMouseEvent): boolean => {
+    const target = e.originalEvent?.target as HTMLElement | null;
+    return !!target?.closest("[data-site-marker]");
+  };
+
   const handleMouseMove = useCallback((e: MapLayerMouseEvent) => {
+    if (isSiteEvent(e)) return;
     const id = routeIdFromEvent(e);
     e.target.getCanvas().style.cursor = id ? "pointer" : "";
     if (id) {
-      setHover({ id, x: e.point.x, y: e.point.y });
+      setHover({ kind: "route", id, x: e.point.x, y: e.point.y });
     } else {
-      setHover((prev) => (prev === null ? prev : null));
+      setHover((prev) => (prev === null || prev.kind !== "route" ? prev : null));
     }
   }, []);
 
   const handleMouseLeave = useCallback((e: MapLayerMouseEvent) => {
     e.target.getCanvas().style.cursor = "";
-    setHover(null);
+    setHover((prev) => (prev?.kind === "route" ? null : prev));
   }, []);
 
   const handleMapClick = useCallback(
     (e: MapLayerMouseEvent) => {
+      if (isSiteEvent(e)) return;
       const id = routeIdFromEvent(e);
       if (!id) return;
       const route = routes.find((r) => r.id === id);
@@ -260,7 +320,12 @@ export default function MapView({
     [onRouteClick]
   );
 
-  const hoveredRoute = hover ? routes.find((r) => r.id === hover.id) : null;
+  const hoveredLabel =
+    hover?.kind === "route"
+      ? routes.find((r) => r.id === hover.id)?.name
+      : hover?.kind === "site"
+        ? sites.find((s) => s.id === hover.id)?.name
+        : null;
 
   if (!mapStyle) {
     return <div className="flex-1 bg-background" />;
@@ -269,6 +334,7 @@ export default function MapView({
   return (
     <div className="flex-1 relative">
       <Map
+        ref={mapRef}
         initialViewState={{
           longitude: 40,
           latitude: 20,
@@ -282,7 +348,7 @@ export default function MapView({
         onClick={handleMapClick}
       >
         {routeData.map(({ route, coords }) => {
-          const isHovered = hover?.id === route.id;
+          const isHovered = hover?.kind === "route" && hover.id === route.id;
           return (
           <Source
             key={route.id}
@@ -320,16 +386,21 @@ export default function MapView({
           </Source>
           );
         })}
-        {visibleEndpoints.map((endpoint) => {
+      </Map>
+      <div
+        ref={overlayRef}
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        {visibleEndpoints.flatMap((endpoint) => {
           const [lng, lat] = locations[endpoint.location];
-          return (
-          <Marker
-            key={endpoint.location}
-            longitude={lng}
-            latitude={lat}
-            anchor="center"
-          >
-            <div className="relative w-3 h-3 pointer-events-none">
+          return WORLD_COPY_OFFSETS.map((offset) => (
+            <div
+              key={`${endpoint.location}@${offset}`}
+              ref={markerRef}
+              data-lng={lng + offset}
+              data-lat={lat}
+              className="pointer-events-none absolute left-0 top-0 w-3 h-3"
+            >
               <div
                 className="absolute inset-0 rounded-full bg-foreground/60"
                 style={{ animation: "endpoint-ping 900ms ease-out forwards" }}
@@ -339,11 +410,53 @@ export default function MapView({
                 style={{ animation: "endpoint-pop 450ms cubic-bezier(0.34, 1.56, 0.64, 1) both" }}
               />
             </div>
-          </Marker>
-          );
+          ));
         })}
-      </Map>
-      {hover && hoveredRoute && (
+        {visibleSites.flatMap((site) => {
+          const [lng, lat] = locations[site.location];
+          return WORLD_COPY_OFFSETS.map((offset) => (
+            <button
+              key={`${site.id}@${offset}`}
+              ref={markerRef}
+              type="button"
+              aria-label={site.name}
+              data-site-marker={site.id}
+              data-lng={lng + offset}
+              data-lat={lat}
+              className="group pointer-events-auto absolute left-0 top-0 w-4 h-4 cursor-pointer bg-transparent border-0 p-0"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSiteClick?.(site);
+              }}
+              onMouseMove={(e) => {
+                const wrapper = overlayRef.current;
+                const rect = wrapper?.getBoundingClientRect();
+                setHover({
+                  kind: "site",
+                  id: site.id,
+                  x: e.clientX - (rect?.left ?? 0),
+                  y: e.clientY - (rect?.top ?? 0),
+                });
+              }}
+              onMouseLeave={() =>
+                setHover((prev) =>
+                  prev?.kind === "site" && prev.id === site.id ? null : prev,
+                )
+              }
+            >
+              <span
+                className="absolute inset-0 rounded-full bg-amber-500/30 group-hover:bg-amber-500/50 transition-colors"
+                style={{ animation: "endpoint-ping 1200ms ease-out forwards" }}
+              />
+              <span
+                className="absolute inset-[3px] rotate-45 bg-amber-600 border-2 border-background group-hover:inset-[2px] transition-all"
+                style={{ animation: "endpoint-pop 450ms cubic-bezier(0.34, 1.56, 0.64, 1) both" }}
+              />
+            </button>
+          ));
+        })}
+      </div>
+      {hover && hoveredLabel && (
         <div
           className="pointer-events-none absolute z-10 rounded-md border bg-popover px-2 py-1 text-sm text-popover-foreground shadow-md whitespace-nowrap"
           style={{
@@ -351,7 +464,7 @@ export default function MapView({
             top: hover.y + 12,
           }}
         >
-          {hoveredRoute.name}
+          {hoveredLabel}
         </div>
       )}
     </div>

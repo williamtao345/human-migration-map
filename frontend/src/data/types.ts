@@ -9,3 +9,11 @@ export interface MigrationRoute {
   waypoints: LocationName[];
   description: string;
 }
+
+export interface Site {
+  id: string;
+  name: string;
+  location: LocationName;
+  year: number; // dated age of the find (negative = years ago, positive = CE)
+  description: string;
+}

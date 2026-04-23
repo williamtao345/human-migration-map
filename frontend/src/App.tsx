@@ -2,31 +2,34 @@ import { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import MapView from "./components/MapView";
 import TimelineSlider from "./components/TimelineSlider";
-import RouteDrawer from "./components/RouteDrawer";
-import type { MigrationRoute } from "./data/types";
+import RouteDrawer, { type DrawerSelection } from "./components/RouteDrawer";
 
 const MIN_YEAR = -65000;
 const MAX_YEAR = 1200;
 const AUTOPLAY_DURATION_MS = 30000;
-const AUTOPLAY_TICK_MS = 50;
 
 function App() {
   const [year, setYear] = useState(MIN_YEAR);
-  const [selectedRoute, setSelectedRoute] = useState<MigrationRoute | null>(null);
+  const [selection, setSelection] = useState<DrawerSelection | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!isPlaying) return;
-    const interval = setInterval(() => {
-      const now = performance.now();
+    let frame = 0;
+    const tick = (now: number) => {
       if (startTimeRef.current === null) startTimeRef.current = now;
       const elapsed = now - startTimeRef.current;
       const t = Math.min(elapsed / AUTOPLAY_DURATION_MS, 1);
       setYear(MIN_YEAR + (MAX_YEAR - MIN_YEAR) * t);
-      if (t >= 1) setIsPlaying(false);
-    }, AUTOPLAY_TICK_MS);
-    return () => clearInterval(interval);
+      if (t >= 1) {
+        setIsPlaying(false);
+        return;
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
   }, [isPlaying]);
 
   const handleYearChange = (next: number) => {
@@ -38,9 +41,13 @@ function App() {
     <div className="h-screen flex flex-col">
       <Header />
       <div className="flex-1 relative flex flex-col min-h-0">
-        <MapView year={year} onRouteClick={setSelectedRoute} />
+        <MapView
+          year={year}
+          onRouteClick={(route) => setSelection({ kind: "route", data: route })}
+          onSiteClick={(site) => setSelection({ kind: "site", data: site })}
+        />
         <TimelineSlider year={year} onYearChange={handleYearChange} />
-        <RouteDrawer route={selectedRoute} onClose={() => setSelectedRoute(null)} />
+        <RouteDrawer selection={selection} onClose={() => setSelection(null)} />
       </div>
     </div>
   );
