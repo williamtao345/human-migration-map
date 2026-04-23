@@ -1,4 +1,5 @@
 import { Slider } from "@/components/ui/slider";
+import { Badge } from "@/components/ui/badge";
 import { sliderToYear, yearToSlider, formatYear, getEra } from "@/lib/timeline";
 
 const SLIDER_MIN = 0;
@@ -24,11 +25,14 @@ export default function TimelineSlider({
           onYearChange(sliderToYear(val / SLIDER_MAX));
         }}
       />
-      <div className="flex justify-between text-xs text-muted-foreground">
+      <div className="flex justify-between items-center text-xs text-muted-foreground">
         <span>65 kya</span>
-        <span className="font-medium text-foreground">
-          {formatYear(year)} — {getEra(year)}
-        </span>
+        <div className="flex-1 grid grid-cols-2 items-center gap-2 px-4">
+          <span className="font-medium text-foreground text-right">{formatYear(year)}</span>
+          <div className="flex justify-start">
+            <Badge variant="secondary">{getEra(year)}</Badge>
+          </div>
+        </div>
         <span>1200 CE</span>
       </div>
     </div>

@@ -1,10 +1,14 @@
-import { useMemo, useCallback } from "react";
-import Map, { Source, Layer, Marker } from "react-map-gl/maplibre";
+import { useMemo, useCallback, useState } from "react";
+import Map, { Source, Layer, Marker, type MapLayerMouseEvent } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { routes } from "@/data/routes";
-import { events } from "@/data/events";
-import type { MigrationRoute, MigrationEvent } from "@/data/types";
+import { locations, type LocationName } from "@/data/locations";
+import type { MigrationRoute } from "@/data/types";
 import type { LineLayerSpecification } from "maplibre-gl";
+
+function coordOf(name: LocationName): [number, number] {
+  return [...locations[name]];
+}
 
 // Catmull-Rom spline: smooths waypoints into a curve
 // phantomBefore/phantomAfter provide tangent continuity at junctions with other routes
@@ -50,32 +54,28 @@ function catmullRom(
 }
 
 // Build phantom point lookups so connected routes have smooth tangents at junctions
-function coordKey(c: [number, number]) { return `${c[0]},${c[1]}`; }
-
-// Match on raw coordinates, but return normalized phantom points relative to the matched route
-function buildPhantomMaps(): { beforeMap: globalThis.Map<string, [number, number]>; afterMap: globalThis.Map<string, [number, number]> } {
-  const beforeMap = new globalThis.Map<string, [number, number]>();
-  const afterMap = new globalThis.Map<string, [number, number]>();
+function buildPhantomMaps(): { beforeMap: globalThis.Map<LocationName, LocationName>; afterMap: globalThis.Map<LocationName, LocationName> } {
+  const beforeMap = new globalThis.Map<LocationName, LocationName>();
+  const afterMap = new globalThis.Map<LocationName, LocationName>();
 
   for (const route of routes) {
-    const raw = route.coordinates;
+    const w = route.waypoints;
 
     for (const other of routes) {
       if (other.id === route.id) continue;
-      const otherRaw = other.coordinates;
+      const otherStart = other.waypoints[0];
+      const otherEnd = other.waypoints[other.waypoints.length - 1];
 
-      // If other route starts where this route has a point, provide phantom for other's start
-      for (let i = 0; i < raw.length; i++) {
-        if (coordKey(raw[i]) === coordKey(otherRaw[0]) && i > 0) {
-          beforeMap.set(coordKey(otherRaw[0]), raw[i - 1]);
+      for (let i = 0; i < w.length; i++) {
+        if (w[i] === otherStart && i > 0) {
+          beforeMap.set(otherStart, w[i - 1]);
           break;
         }
       }
 
-      // If other route ends where this route has a point, provide phantom for other's end
-      for (let i = 0; i < raw.length; i++) {
-        if (coordKey(raw[i]) === coordKey(otherRaw[otherRaw.length - 1]) && i < raw.length - 1) {
-          afterMap.set(coordKey(otherRaw[otherRaw.length - 1]), raw[i + 1]);
+      for (let i = 0; i < w.length; i++) {
+        if (w[i] === otherEnd && i < w.length - 1) {
+          afterMap.set(otherEnd, w[i + 1]);
           break;
         }
       }
@@ -86,6 +86,21 @@ function buildPhantomMaps(): { beforeMap: globalThis.Map<string, [number, number
 }
 
 const { beforeMap, afterMap } = buildPhantomMaps();
+
+// Endpoints = first + last waypoint of each route, deduped by location.
+// When two routes share an endpoint, keep the earliest visibility year.
+const endpoints: { location: LocationName; year: number }[] = (() => {
+  const earliest = new globalThis.Map<LocationName, number>();
+  const consider = (loc: LocationName, year: number) => {
+    const prev = earliest.get(loc);
+    if (prev === undefined || year < prev) earliest.set(loc, year);
+  };
+  for (const route of routes) {
+    consider(route.waypoints[0], route.startYear);
+    consider(route.waypoints[route.waypoints.length - 1], route.endYear);
+  }
+  return Array.from(earliest, ([location, year]) => ({ location, year }));
+})();
 
 // Normalize longitudes so consecutive points always take the short path
 function normalizeLongitudes(coords: [number, number][]): [number, number][] {
@@ -101,11 +116,31 @@ function normalizeLongitudes(coords: [number, number][]): [number, number][] {
   return result;
 }
 
+function normalizeRelative(
+  point: [number, number] | undefined,
+  ref: [number, number],
+): [number, number] | undefined {
+  if (!point) return undefined;
+  let lng = point[0];
+  while (lng - ref[0] > 180) lng -= 360;
+  while (ref[0] - lng > 180) lng += 360;
+  return [lng, point[1]];
+}
+
 function getVisibleCoords(route: MigrationRoute, year: number): [number, number][] {
-  const raw = route.coordinates;
+  const w = route.waypoints;
+  const raw = w.map(coordOf);
   const normalized = normalizeLongitudes(raw);
-  const phantomBefore = beforeMap.get(coordKey(raw[0]));
-  const phantomAfter = afterMap.get(coordKey(raw[raw.length - 1]));
+  const phantomBeforeName = beforeMap.get(w[0]);
+  const phantomAfterName = afterMap.get(w[w.length - 1]);
+  const phantomBefore = normalizeRelative(
+    phantomBeforeName ? coordOf(phantomBeforeName) : undefined,
+    normalized[0],
+  );
+  const phantomAfter = normalizeRelative(
+    phantomAfterName ? coordOf(phantomAfterName) : undefined,
+    normalized[normalized.length - 1],
+  );
   const coords = catmullRom(normalized, phantomBefore, phantomAfter);
   if (year < route.startYear) return [];
   if (year >= route.endYear) return coords;
@@ -135,13 +170,17 @@ const lineLayout: LineLayerSpecification["layout"] = {
   "line-cap": "round",
 };
 
+const HIT_LAYER_SUFFIX = "-hit";
+
 export default function MapView({
   year,
-  onEventClick,
+  onRouteClick,
 }: {
   year: number;
-  onEventClick: (event: MigrationEvent) => void;
+  onRouteClick?: (route: MigrationRoute) => void;
 }) {
+  const [hover, setHover] = useState<{ id: string; x: number; y: number } | null>(null);
+
   const routeData = useMemo(() => {
     return routes.map((route) => ({
       route,
@@ -149,17 +188,50 @@ export default function MapView({
     })).filter((r) => r.coords.length >= 2);
   }, [year]);
 
-  const visibleEvents = useMemo(() => {
-    return events.filter((e) => year >= e.year);
+  const visibleEndpoints = useMemo(() => {
+    return endpoints.filter((e) => year >= e.year);
   }, [year]);
 
-  const handleMarkerClick = useCallback(
-    (event: MigrationEvent) => () => onEventClick(event),
-    [onEventClick]
+  const interactiveLayerIds = useMemo(
+    () => routeData.map(({ route }) => route.id + HIT_LAYER_SUFFIX),
+    [routeData]
   );
 
+  const routeIdFromEvent = (e: MapLayerMouseEvent): string | null => {
+    const layerId = e.features?.[0]?.layer?.id;
+    if (!layerId || !layerId.endsWith(HIT_LAYER_SUFFIX)) return null;
+    return layerId.slice(0, -HIT_LAYER_SUFFIX.length);
+  };
+
+  const handleMouseMove = useCallback((e: MapLayerMouseEvent) => {
+    const id = routeIdFromEvent(e);
+    e.target.getCanvas().style.cursor = id ? "pointer" : "";
+    if (id) {
+      setHover({ id, x: e.point.x, y: e.point.y });
+    } else {
+      setHover((prev) => (prev === null ? prev : null));
+    }
+  }, []);
+
+  const handleMouseLeave = useCallback((e: MapLayerMouseEvent) => {
+    e.target.getCanvas().style.cursor = "";
+    setHover(null);
+  }, []);
+
+  const handleMapClick = useCallback(
+    (e: MapLayerMouseEvent) => {
+      const id = routeIdFromEvent(e);
+      if (!id) return;
+      const route = routes.find((r) => r.id === id);
+      if (route) onRouteClick?.(route);
+    },
+    [onRouteClick]
+  );
+
+  const hoveredRoute = hover ? routes.find((r) => r.id === hover.id) : null;
+
   return (
-    <div className="flex-1">
+    <div className="flex-1 relative">
       <Map
         initialViewState={{
           longitude: 40,
@@ -168,8 +240,14 @@ export default function MapView({
         }}
         style={{ width: "100%", height: "100%" }}
         mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+        interactiveLayerIds={interactiveLayerIds}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleMapClick}
       >
-        {routeData.map(({ route, coords }) => (
+        {routeData.map(({ route, coords }) => {
+          const isHovered = hover?.id === route.id;
+          return (
           <Source
             key={route.id}
             id={route.id}
@@ -189,26 +267,50 @@ export default function MapView({
               layout={lineLayout}
               paint={{
                 "line-color": route.color,
-                "line-width": 3,
-                "line-opacity": 0.8,
+                "line-width": isHovered ? 5 : 3,
+                "line-opacity": isHovered ? 1 : 0.8,
+              }}
+            />
+            <Layer
+              id={route.id + HIT_LAYER_SUFFIX}
+              type="line"
+              layout={lineLayout}
+              paint={{
+                "line-color": route.color,
+                "line-width": 20,
+                "line-opacity": 0,
               }}
             />
           </Source>
-        ))}
-        {visibleEvents.map((event) => (
+          );
+        })}
+        {visibleEndpoints.map((endpoint) => {
+          const [lng, lat] = locations[endpoint.location];
+          return (
           <Marker
-            key={event.id}
-            longitude={event.location[0]}
-            latitude={event.location[1]}
+            key={endpoint.location}
+            longitude={lng}
+            latitude={lat}
             anchor="center"
-            onClick={handleMarkerClick(event)}
           >
             <div
-              className="w-3 h-3 rounded-full bg-foreground border-2 border-background cursor-pointer hover:scale-150 transition-transform"
+              className="w-3 h-3 rounded-full bg-foreground border-2 border-background pointer-events-none"
             />
           </Marker>
-        ))}
+          );
+        })}
       </Map>
+      {hover && hoveredRoute && (
+        <div
+          className="pointer-events-none absolute z-10 rounded-md border bg-popover px-2 py-1 text-sm text-popover-foreground shadow-md whitespace-nowrap"
+          style={{
+            left: hover.x + 12,
+            top: hover.y + 12,
+          }}
+        >
+          {hoveredRoute.name}
+        </div>
+      )}
     </div>
   );
 }

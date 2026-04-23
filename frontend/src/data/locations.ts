@@ -1,7 +1,7 @@
 // Shared location directory — [longitude, latitude]
 // Update coordinates here and they propagate to all routes and events.
 
-const locations = {
+export const locations = {
   // Africa
   omoKibish:        [40, 10],
   djibouti:         [43, 12],
@@ -62,6 +62,13 @@ const locations = {
   westernEurope:    [2, 46],
   ponticSteppe:     [40, 48],
   centralEurope:    [13, 52],
+  aegean:           [25, 39],
+  carpathianBasin:  [20, 47],
+  galicia:          [24, 49],
+  crete:            [25, 35],
+  southernItaly:    [17, 41],
+  southernFrance:   [5, 43],
+  iberia:           [-1, 40],
 
   // Beringia / Americas
   beringStrait:     [-169, 65],
@@ -99,7 +106,3 @@ const locations = {
 } as const satisfies Record<string, readonly [number, number]>;
 
 export type LocationName = keyof typeof locations;
-
-export function coordOf(name: LocationName): [number, number] {
-  return [...locations[name]];
-}

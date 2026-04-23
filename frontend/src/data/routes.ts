@@ -1,5 +1,4 @@
 import type { MigrationRoute } from "./types";
-import { coordOf } from "./locations";
 
 export const routes: MigrationRoute[] = [
   {
@@ -8,14 +7,16 @@ export const routes: MigrationRoute[] = [
     startYear: -65000,
     endYear: -50000,
     color: "#e07a3a",
-    coordinates: [
-      coordOf("omoKibish"),
-      coordOf("djibouti"),
-      coordOf("babElMandeb"),
-      coordOf("southernArabia"),
-      coordOf("easternArabia"),
-      coordOf("levant"),
+    waypoints: [
+      "omoKibish",
+      "djibouti",
+      "babElMandeb",
+      "southernArabia",
+      "easternArabia",
+      "levant",
     ],
+    description:
+      "A single major dispersal event carried a subset of African populations into the Middle East, founding all non-African populations alive today. Genetic diversity decreases steadily with distance from Africa, consistent with serial founder effects as small groups broke off and moved further from the origin. Shortly after leaving Africa, modern humans interbred with Neanderthals in the Middle East, and all non-African populations today carry roughly 2% Neanderthal DNA.",
   },
   {
     id: "sahul",
@@ -23,11 +24,9 @@ export const routes: MigrationRoute[] = [
     startYear: -50000,
     endYear: -47000,
     color: "#c49030",
-    coordinates: [
-      coordOf("sunda"),
-      coordOf("wallacea"),
-      coordOf("northernAustralia"),
-    ],
+    waypoints: ["sunda", "wallacea", "northernAustralia"],
+    description:
+      "Sahul, the ancient landmass connecting Australia, New Guinea, and Tasmania during lower sea levels, was reached by a single founding event shortly after humans first left Africa. Aboriginal Australians remained in high genetic isolation until recent times. Modern Melanesians carry roughly 3 to 6% Denisovan ancestry acquired through admixture in the Wallacea region during this period.",
   },
   {
     id: "south-asia",
@@ -35,22 +34,24 @@ export const routes: MigrationRoute[] = [
     startYear: -55000,
     endYear: -45000,
     color: "#d4a03c",
-    coordinates: [
-      coordOf("levant"),
-      coordOf("mesopotamia"),
-      coordOf("bandarAbbas"),
-      coordOf("gwadar"),
-      coordOf("mumbai"),
-      coordOf("southernIndia"),
-      coordOf("chennai"),
-      coordOf("odishaCoast"),
-      coordOf("dhaka"),
-      coordOf("sittwe"),
-      coordOf("yangon"),
-      coordOf("chumphon"),
-      coordOf("kualaLumpur"),
-      coordOf("sunda"),
+    waypoints: [
+      "levant",
+      "mesopotamia",
+      "bandarAbbas",
+      "gwadar",
+      "mumbai",
+      "southernIndia",
+      "chennai",
+      "odishaCoast",
+      "dhaka",
+      "sittwe",
+      "yangon",
+      "chumphon",
+      "kualaLumpur",
+      "sunda",
     ],
+    description:
+      "Modern humans spread rapidly along the southern coastlines of Asia, reaching Southeast Asia within a few thousand years of leaving Africa. This \"coastal express\" migration followed productive littoral environments and carried the ancestors of South Asian, Southeast Asian, and ultimately Australasian populations. The speed of this dispersal is consistent with a simple foraging lifestyle along the shore and the richness of marine and estuarine resources.",
   },
   {
     id: "east-asia",
@@ -58,15 +59,17 @@ export const routes: MigrationRoute[] = [
     startYear: -50000,
     endYear: -40000,
     color: "#5ba05b",
-    coordinates: [
-      coordOf("gwadar"),
-      coordOf("kabul"),
-      coordOf("samarkand"),
-      coordOf("tibetanPlateauN"),
-      coordOf("westernChina"),
-      coordOf("centralChina"),
-      coordOf("easternChina"),
+    waypoints: [
+      "gwadar",
+      "kabul",
+      "samarkand",
+      "tibetanPlateauN",
+      "westernChina",
+      "centralChina",
+      "easternChina",
     ],
+    description:
+      "A northern inland route branched off the coastal dispersal and moved through Central Asia into the East Asian interior. Populations along this path gave rise to the ancestral East Asian genetic lineage. The EPAS1 high-altitude adaptation gene, inherited from Denisovans, later helped populations thrive on the Tibetan Plateau.",
   },
   {
     id: "north-asia",
@@ -74,14 +77,16 @@ export const routes: MigrationRoute[] = [
     startYear: -40000,
     endYear: -25000,
     color: "#7bb85b",
-    coordinates: [
-      coordOf("westernChina"),
-      coordOf("mongolia"),
-      coordOf("nMongolia"),
-      coordOf("centralSiberia"),
-      coordOf("easternSiberia"),
-      coordOf("neSiberia"),
+    waypoints: [
+      "westernChina",
+      "mongolia",
+      "nMongolia",
+      "centralSiberia",
+      "easternSiberia",
+      "neSiberia",
     ],
+    description:
+      "Populations pushed north into the Mongolian steppe and Siberia, adapting to increasingly cold continental climates. Ancient North Siberians, known from genomes such as the Mal'ta boy (~24 kya), later contributed substantially to both West Eurasian and Native American ancestry.",
   },
   {
     id: "europe-whg",
@@ -89,27 +94,49 @@ export const routes: MigrationRoute[] = [
     startYear: -45000,
     endYear: -20000,
     color: "#4a8bc2",
-    coordinates: [
-      coordOf("levant"),
-      coordOf("southernTurkey"),
-      coordOf("centralAnatolia"),
-      coordOf("nwTurkey"),
-      coordOf("balkans"),
-      coordOf("northernItaly"),
-      coordOf("westernEurope"),
+    waypoints: [
+      "levant",
+      "southernTurkey",
+      "centralAnatolia",
+      "nwTurkey",
+      "balkans",
+      "northernItaly",
+      "westernEurope",
     ],
+    description:
+      "Modern European ancestry derives from three major population waves. The first wave, Western Hunter-Gatherers (WHG), entered Europe via Anatolia and the Balkans beginning ~45 kya, surviving the Last Glacial Maximum in southern refugia before recolonizing the continent.",
   },
   {
-    id: "europe-eef",
-    name: "Peopling of Europe (EEF)",
-    startYear: -11000,
+    id: "europe-eef-danubian",
+    name: "Peopling of Europe (EEF — Danubian / LBK)",
+    startYear: -9000,
     endYear: -7000,
     color: "#6ba3d6",
-    coordinates: [
-      coordOf("centralAnatoliaEEF"),
-      coordOf("balkans"),
-      coordOf("westernEurope"),
+    waypoints: [
+      "centralAnatoliaEEF",
+      "aegean",
+      "balkans",
+      "carpathianBasin",
+      "centralEurope",
     ],
+    description:
+      "The Danubian stream of Early European Farmers carried Neolithic agriculture from Anatolia through the Aegean and up the Danube into central Europe, crystallizing archaeologically as the Linearbandkeramik (LBK) culture. This inland farming wave largely replaced the pre-existing WHG populations, though significant admixture also occurred.",
+  },
+  {
+    id: "europe-eef-cardial",
+    name: "Peopling of Europe (EEF — Cardial)",
+    startYear: -8500,
+    endYear: -6500,
+    color: "#4db8a8",
+    waypoints: [
+      "centralAnatoliaEEF",
+      "crete",
+      "southernItaly",
+      "southernFrance",
+      "iberia",
+    ],
+    description:
+      "The Mediterranean stream of Early European Farmers, the Cardial / Impressa culture, spread Neolithic agriculture along the northern Mediterranean coastline, reaching Iberia within a few centuries. Together with the Danubian wave, these EEF dispersals produced the Neolithic European gene pool.",
   },
   {
     id: "europe-yamnaya",
@@ -117,10 +144,9 @@ export const routes: MigrationRoute[] = [
     startYear: -4500,
     endYear: -3000,
     color: "#3b6ea0",
-    coordinates: [
-      coordOf("ponticSteppe"),
-      coordOf("centralEurope"),
-    ],
+    waypoints: ["ponticSteppe", "galicia", "centralEurope"],
+    description:
+      "Yamnaya steppe herders from the Pontic-Caspian steppe expanded into Europe ~4.5 kya, bringing horses, wheeled vehicles, and possibly Indo-European languages. This wave contributed a large fraction of modern European ancestry, especially in the north.",
   },
   {
     id: "beringia",
@@ -128,11 +154,9 @@ export const routes: MigrationRoute[] = [
     startYear: -23000,
     endYear: -15000,
     color: "#c04040",
-    coordinates: [
-      coordOf("neSiberia"),
-      coordOf("beringStrait"),
-      coordOf("alaska"),
-    ],
+    waypoints: ["neSiberia", "beringStrait", "alaska"],
+    description:
+      "The Native American gene pool formed ~23 kya from Ancient East Asians and Ancient North Siberians. The ancestral population walked from Siberia to Alaska via the Bering Land Bridge, which may have served as a mild wetland refugium where the founding population remained isolated for several thousand years before expanding southward.",
   },
   {
     id: "americas",
@@ -140,22 +164,24 @@ export const routes: MigrationRoute[] = [
     startYear: -15000,
     endYear: -13000,
     color: "#d45050",
-    coordinates: [
-      coordOf("alaska"),
-      coordOf("bcCoast"),
-      coordOf("pacificNW"),
-      coordOf("california"),
-      coordOf("wMexicoCoast"),
-      coordOf("oaxaca"),
-      coordOf("guatemala"),
-      coordOf("panama"),
-      coordOf("bogota"),
-      coordOf("quito"),
-      coordOf("lima"),
-      coordOf("bolivia"),
-      coordOf("nArgentina"),
-      coordOf("sArgentina"),
+    waypoints: [
+      "alaska",
+      "bcCoast",
+      "pacificNW",
+      "california",
+      "wMexicoCoast",
+      "oaxaca",
+      "guatemala",
+      "panama",
+      "bogota",
+      "quito",
+      "lima",
+      "bolivia",
+      "nArgentina",
+      "sArgentina",
     ],
+    description:
+      "The oldest accepted archaeological evidence dates to roughly 15 to 14 kya, with pre-Clovis sites including Monte Verde (Chile, 14.2 kya) and Page-Ladson (Florida, 14.45 kya). The first peoples traveled the Pacific coastal route, as the ice-free corridor was not viable until ~12.6 kya. Within ~2,000 years of arrival, populations reached the southern tip of South America.",
   },
   {
     id: "austronesian",
@@ -163,17 +189,19 @@ export const routes: MigrationRoute[] = [
     startYear: -3000,
     endYear: -800,
     color: "#a070d0",
-    coordinates: [
-      coordOf("easternChina"),
-      coordOf("taiwan"),
-      coordOf("manila"),
-      coordOf("sulawesi"),
-      coordOf("portMoresby"),
-      coordOf("honiara"),
-      coordOf("fiji"),
-      coordOf("tonga"),
-      coordOf("samoa"),
+    waypoints: [
+      "easternChina",
+      "taiwan",
+      "manila",
+      "sulawesi",
+      "portMoresby",
+      "honiara",
+      "fiji",
+      "tonga",
+      "samoa",
     ],
+    description:
+      "The Austronesian expansion began with farmers leaving Taiwan ~5 kya, spreading through the Philippines and island Southeast Asia into Near Oceania. They reached Remote Oceania as the Lapita culture, founding populations in Fiji, Tonga, and Samoa. This is one of the largest maritime expansions in human history.",
   },
   {
     id: "polynesia",
@@ -181,13 +209,15 @@ export const routes: MigrationRoute[] = [
     startYear: 800,
     endYear: 1200,
     color: "#8b5fc7",
-    coordinates: [
-      coordOf("samoa"),
-      coordOf("cookIslands"),
-      coordOf("tahiti"),
-      coordOf("tuamotu"),
-      coordOf("marquesas"),
-      coordOf("rapaNui"),
+    waypoints: [
+      "samoa",
+      "cookIslands",
+      "tahiti",
+      "tuamotu",
+      "marquesas",
+      "rapaNui",
     ],
+    description:
+      "Polynesian seafarers expanded eastward across the Pacific from Samoa through island-hopping migrations, each founded by small groups of 30 to 200 individuals. Serial bottlenecks caused genetic diversity to decline at each step. Genetic evidence suggests contact between Polynesians and Native Americans around ~1200 CE.",
   },
 ];
