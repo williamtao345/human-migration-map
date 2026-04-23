@@ -55,6 +55,9 @@ export const locations = {
   centralSiberia:   [130, 60],
   easternSiberia:   [150, 62],
   neSiberia:        [170, 63],
+  maltaBaikal:      [103, 53],
+  westSiberia:      [82, 55],
+  uralsSteppe:      [55, 52],
 
   // Europe
   balkans:          [22, 42],

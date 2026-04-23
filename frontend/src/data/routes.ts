@@ -5,7 +5,7 @@ export const routes: MigrationRoute[] = [
     id: "out-of-africa",
     name: "Out of Africa",
     startYear: -65000,
-    endYear: -50000,
+    endYear: -55000,
     color: "#e07a3a",
     waypoints: [
       "omoKibish",
@@ -32,7 +32,7 @@ export const routes: MigrationRoute[] = [
     id: "south-asia",
     name: "Migration to South & SE Asia",
     startYear: -55000,
-    endYear: -45000,
+    endYear: -50000,
     color: "#d4a03c",
     waypoints: [
       "levant",
@@ -87,6 +87,16 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "Populations pushed north into the Mongolian steppe and Siberia, adapting to increasingly cold continental climates. Ancient North Siberians, known from genomes such as the Mal'ta boy (~24 kya), later contributed substantially to both West Eurasian and Native American ancestry.",
+  },
+  {
+    id: "ane-westward",
+    name: "Ancient North Eurasian Expansion",
+    startYear: -20000,
+    endYear: -8000,
+    color: "#8470a8",
+    waypoints: ["nMongolia", "maltaBaikal", "westSiberia", "uralsSteppe", "ponticSteppe"],
+    description:
+      "Ancient North Eurasians (ANE), best known from the Mal'ta boy (~24 kya) near Lake Baikal, spread westward across Siberia and the steppe after the Last Glacial Maximum. Their ancestry mixed with Western Hunter-Gatherers in Eastern Europe to form Eastern Hunter-Gatherers (EHG), the key northern component that later fused with Caucasus Hunter-Gatherers to produce Yamnaya steppe pastoralists. This westward gene flow is why Bronze Age steppe populations carry a distinctive Siberian ancestry unrelated to the earlier European farming wave.",
   },
   {
     id: "europe-whg",

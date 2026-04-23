@@ -1,10 +1,29 @@
-import { useMemo, useCallback, useState } from "react";
+import { useMemo, useCallback, useState, useEffect } from "react";
 import Map, { Source, Layer, Marker, type MapLayerMouseEvent } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { routes } from "@/data/routes";
 import { locations, type LocationName } from "@/data/locations";
 import type { MigrationRoute } from "@/data/types";
-import type { LineLayerSpecification } from "maplibre-gl";
+import type { LineLayerSpecification, StyleSpecification } from "maplibre-gl";
+
+const BASE_STYLE_URL = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
+const WATER_COLOR = "#dcdcdc";
+const WATER_SHADOW_COLOR = "#d4d4d4";
+
+function patchWaterColors(style: StyleSpecification): StyleSpecification {
+  return {
+    ...style,
+    layers: style.layers.map((layer) => {
+      if (layer.id === "water" && layer.type === "fill") {
+        return { ...layer, paint: { ...layer.paint, "fill-color": WATER_COLOR } };
+      }
+      if (layer.id === "water_shadow" && layer.type === "fill") {
+        return { ...layer, paint: { ...layer.paint, "fill-color": WATER_SHADOW_COLOR } };
+      }
+      return layer;
+    }),
+  };
+}
 
 function coordOf(name: LocationName): [number, number] {
   return [...locations[name]];
@@ -180,6 +199,19 @@ export default function MapView({
   onRouteClick?: (route: MigrationRoute) => void;
 }) {
   const [hover, setHover] = useState<{ id: string; x: number; y: number } | null>(null);
+  const [mapStyle, setMapStyle] = useState<StyleSpecification | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(BASE_STYLE_URL)
+      .then((r) => r.json() as Promise<StyleSpecification>)
+      .then((style) => {
+        if (!cancelled) setMapStyle(patchWaterColors(style));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const routeData = useMemo(() => {
     return routes.map((route) => ({
@@ -230,6 +262,10 @@ export default function MapView({
 
   const hoveredRoute = hover ? routes.find((r) => r.id === hover.id) : null;
 
+  if (!mapStyle) {
+    return <div className="flex-1 bg-background" />;
+  }
+
   return (
     <div className="flex-1 relative">
       <Map
@@ -239,7 +275,7 @@ export default function MapView({
           zoom: 2,
         }}
         style={{ width: "100%", height: "100%" }}
-        mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+        mapStyle={mapStyle}
         interactiveLayerIds={interactiveLayerIds}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -293,9 +329,16 @@ export default function MapView({
             latitude={lat}
             anchor="center"
           >
-            <div
-              className="w-3 h-3 rounded-full bg-foreground border-2 border-background pointer-events-none"
-            />
+            <div className="relative w-3 h-3 pointer-events-none">
+              <div
+                className="absolute inset-0 rounded-full bg-foreground/60"
+                style={{ animation: "endpoint-ping 900ms ease-out forwards" }}
+              />
+              <div
+                className="absolute inset-0 rounded-full bg-foreground border-2 border-background"
+                style={{ animation: "endpoint-pop 450ms cubic-bezier(0.34, 1.56, 0.64, 1) both" }}
+              />
+            </div>
           </Marker>
           );
         })}
