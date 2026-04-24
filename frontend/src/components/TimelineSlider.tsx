@@ -1,6 +1,7 @@
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
-import { sliderToYear, yearToSlider, formatYear, getEra } from "@/lib/timeline";
+import { sliderToYear, yearToSlider, getEra } from "@/lib/timeline";
+import { formatYear } from "@/lib/formatYear";
 
 const SLIDER_MIN = 0;
 const SLIDER_MAX = 1000;

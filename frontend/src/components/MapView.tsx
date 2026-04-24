@@ -237,20 +237,6 @@ export default function MapView({
   );
 
   useEffect(() => {
-    const map = mapRef.current?.getMap();
-    if (!map) return;
-    repositionMarkers();
-    map.on("move", repositionMarkers);
-    map.on("zoom", repositionMarkers);
-    map.on("resize", repositionMarkers);
-    return () => {
-      map.off("move", repositionMarkers);
-      map.off("zoom", repositionMarkers);
-      map.off("resize", repositionMarkers);
-    };
-  }, [mapStyle, repositionMarkers]);
-
-  useEffect(() => {
     let cancelled = false;
     fetch(BASE_STYLE_URL)
       .then((r) => r.json() as Promise<StyleSpecification>)
@@ -346,6 +332,10 @@ export default function MapView({
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onClick={handleMapClick}
+        onLoad={repositionMarkers}
+        onMove={repositionMarkers}
+        onZoom={repositionMarkers}
+        onResize={repositionMarkers}
       >
         {routeData.map(({ route, coords }) => {
           const isHovered = hover?.kind === "route" && hover.id === route.id;
@@ -399,7 +389,7 @@ export default function MapView({
               ref={markerRef}
               data-lng={lng + offset}
               data-lat={lat}
-              className="pointer-events-none absolute left-0 top-0 w-3 h-3"
+              className="pointer-events-none absolute left-0 top-0 w-2 h-2"
             >
               <div
                 className="absolute inset-0 rounded-full bg-foreground/60"

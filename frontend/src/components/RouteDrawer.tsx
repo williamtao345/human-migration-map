@@ -6,7 +6,7 @@ import {
   DrawerDescription,
 } from "@/components/ui/drawer";
 import type { MigrationRoute, Site } from "@/data/types";
-import { formatYear } from "@/lib/timeline";
+import { formatYear } from "@/lib/formatYear";
 
 export type DrawerSelection =
   | { kind: "route"; data: MigrationRoute }

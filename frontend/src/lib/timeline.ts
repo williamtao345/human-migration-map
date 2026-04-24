@@ -13,18 +13,6 @@ export function yearToSlider(year: number): number {
   return (year - MIN_YEAR) / (MAX_YEAR - MIN_YEAR);
 }
 
-// Format year for display
-export function formatYear(year: number): string {
-  if (year <= -1000) {
-    const kya = Math.round(-year / 1000);
-    return `${kya} kya`;
-  }
-  if (year < 0) {
-    return `${Math.round(-year)} BCE`;
-  }
-  return `${Math.round(year)} CE`;
-}
-
 // Get era label for a given year
 export function getEra(year: number): string {
   if (year < -11700) return "Late Pleistocene";

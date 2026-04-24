@@ -6,6 +6,11 @@ export const locations = {
   omoKibish:        [40, 10],
   djibouti:         [43, 12],
   babElMandeb:      [45, 13],
+  hadar:            [40.633, 11.167],
+  aramis:           [40.50, 10.47],
+  laetoli:          [35.18, -3.22],
+  olduvai:          [35.35, -2.99],
+  toroMenalla:      [17.47, 16.26],
 
   // Arabia
   southernArabia:   [45, 15],
@@ -37,6 +42,7 @@ export const locations = {
   kualaLumpur:      [102, 3],
   sunda:           [105, 0],
   wallacea:         [120, -5],
+  sangiran:         [110.85, -7.45],
 
   // Australia
   northernAustralia:[132, -12],
@@ -48,6 +54,7 @@ export const locations = {
   westernChina:     [100, 35],
   centralChina:     [110, 32],
   easternChina:     [118, 30],
+  zhoukoudian:      [115.8695, 39.6547],
 
   // North Asia
   mongolia:         [107, 47],
@@ -55,14 +62,18 @@ export const locations = {
   centralSiberia:   [130, 60],
   easternSiberia:   [150, 62],
   neSiberia:        [170, 63],
-  maltaBaikal:      [103, 53],
+  maltaBaikal:      [103.5, 52.9],
   westSiberia:      [82, 55],
   uralsSteppe:      [55, 52],
+  ustIshim:         [71.2, 57.744],
+  yanaRhs:          [135.385, 70.72],
+  denisovaCave:     [84.676, 51.397],
 
   // Europe
   balkans:          [22, 42],
   northernItaly:    [15, 45],
   westernEurope:    [2, 46],
+  neanderValley:    [7.15, 51.23],
   ponticSteppe:     [40, 48],
   centralEurope:    [13, 52],
   aegean:           [25, 39],
@@ -76,6 +87,8 @@ export const locations = {
   // Beringia / Americas
   beringStrait:     [-169, 65],
   alaska:           [-150, 63],
+  upwardSunRiver:   [-145.76, 63.71],
+  anzick:           [-110.646, 45.987],
   bcCoast:          [-130, 55],
   pacificNW:        [-125, 48],
   california:       [-122, 38],
@@ -89,6 +102,7 @@ export const locations = {
   bolivia:          [-65, -17],
   nArgentina:       [-65, -30],
   sArgentina:       [-68, -40],
+  monteVerde:       [-73.203, -41.503],
 
   // Austronesian / Melanesia
   taiwan:           [121, 25],
