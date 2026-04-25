@@ -199,12 +199,16 @@ const WORLD_COPY_OFFSETS = [-720, -360, 0, 360, 720];
 
 export default function MapView({
   year,
+  ready,
   onRouteClick,
   onSiteClick,
+  onReady,
 }: {
   year: number;
+  ready: boolean;
   onRouteClick?: (route: MigrationRoute) => void;
   onSiteClick?: (site: Site) => void;
+  onReady?: () => void;
 }) {
   const [hover, setHover] = useState<
     { kind: "route" | "site"; id: string; x: number; y: number } | null
@@ -212,6 +216,9 @@ export default function MapView({
   const [mapStyle, setMapStyle] = useState<StyleSpecification | null>(null);
   const mapRef = useRef<MapRef | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
+  const [popoverPos, setPopoverPos] = useState<{ left: number; top: number } | null>(null);
 
   const positionElement = useCallback((el: HTMLElement) => {
     const map = mapRef.current?.getMap();
@@ -313,12 +320,33 @@ export default function MapView({
         ? sites.find((s) => s.id === hover.id)?.name
         : null;
 
+  useEffect(() => {
+    if (!hover || !hoveredLabel) {
+      setPopoverPos(null);
+      return;
+    }
+    const container = containerRef.current;
+    const popover = popoverRef.current;
+    if (!container || !popover) return;
+    const { width: cw, height: ch } = container.getBoundingClientRect();
+    const { width: pw, height: ph } = popover.getBoundingClientRect();
+    const margin = 8;
+    const offset = 12;
+    let left = hover.x + offset;
+    let top = hover.y + offset;
+    if (left + pw + margin > cw) left = hover.x - pw - offset;
+    if (top + ph + margin > ch) top = hover.y - ph - offset;
+    left = Math.max(margin, left);
+    top = Math.max(margin, top);
+    setPopoverPos({ left, top });
+  }, [hover, hoveredLabel]);
+
   if (!mapStyle) {
     return <div className="flex-1 bg-background" />;
   }
 
   return (
-    <div className="flex-1 relative">
+    <div ref={containerRef} className="flex-1 relative">
       <Map
         ref={mapRef}
         initialViewState={{
@@ -332,7 +360,10 @@ export default function MapView({
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onClick={handleMapClick}
-        onLoad={repositionMarkers}
+        onLoad={() => {
+          repositionMarkers();
+          onReady?.();
+        }}
         onMove={repositionMarkers}
         onZoom={repositionMarkers}
         onResize={repositionMarkers}
@@ -381,7 +412,7 @@ export default function MapView({
         ref={overlayRef}
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        {visibleEndpoints.flatMap((endpoint) => {
+        {ready &&visibleEndpoints.flatMap((endpoint) => {
           const [lng, lat] = locations[endpoint.location];
           return WORLD_COPY_OFFSETS.map((offset) => (
             <div
@@ -402,7 +433,7 @@ export default function MapView({
             </div>
           ));
         })}
-        {visibleSites.flatMap((site) => {
+        {ready &&visibleSites.flatMap((site) => {
           const [lng, lat] = locations[site.location];
           return WORLD_COPY_OFFSETS.map((offset) => (
             <button
@@ -438,20 +469,27 @@ export default function MapView({
                 className="absolute inset-0 rounded-full bg-amber-500/30 group-hover:bg-amber-500/50 transition-colors"
                 style={{ animation: "endpoint-ping 1200ms ease-out forwards" }}
               />
-              <span
-                className="absolute inset-[3px] rotate-45 bg-amber-600 border-2 border-background group-hover:inset-[2px] transition-all"
-                style={{ animation: "endpoint-pop 450ms cubic-bezier(0.34, 1.56, 0.64, 1) both" }}
-              />
+              <span className="absolute inset-[3px] rotate-45">
+                <span
+                  className="block relative w-full h-full transition-transform duration-150 ease-out group-hover:scale-125"
+                  style={{ animation: "endpoint-pop 450ms cubic-bezier(0.34, 1.56, 0.64, 1) both" }}
+                >
+                  <span className="absolute inset-0 bg-background" />
+                  <span className="absolute inset-[2px] bg-amber-600" />
+                </span>
+              </span>
             </button>
           ));
         })}
       </div>
       {hover && hoveredLabel && (
         <div
+          ref={popoverRef}
           className="pointer-events-none absolute z-10 rounded-md border bg-popover px-2 py-1 text-sm text-popover-foreground shadow-md whitespace-nowrap"
           style={{
-            left: hover.x + 12,
-            top: hover.y + 12,
+            left: popoverPos?.left ?? -9999,
+            top: popoverPos?.top ?? -9999,
+            visibility: popoverPos ? "visible" : "hidden",
           }}
         >
           {hoveredLabel}

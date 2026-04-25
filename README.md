@@ -28,12 +28,12 @@ npm run dev
 ## Project Structure
 
 ```
-├── PRD.md                  # Product requirements
-├── migration-events.md     # Reference data for all migration events
+├── CLAUDE.md               # Guidance for Claude Code
+├── migration-events.md     # Reference data for migration events
 ├── dev.sh                  # Start dev server
 └── frontend/               # React app
     └── src/
-        ├── components/     # UI components
-        ├── data/           # Migration routes and events
-        └── lib/            # Utilities (timeline math, etc.)
+        ├── components/     # UI components (MapView, RouteDrawer, TimelineSlider, …)
+        ├── data/           # locations, routes, sites, shared types
+        └── lib/            # Utilities (timeline math, year formatting)
 ```

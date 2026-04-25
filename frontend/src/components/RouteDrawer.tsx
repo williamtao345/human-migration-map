@@ -41,7 +41,29 @@ export default function RouteDrawer({
               <DrawerTitle>{title}</DrawerTitle>
               <DrawerDescription>{subtitle}</DrawerDescription>
             </DrawerHeader>
-            <p className="text-sm">{description}</p>
+            <div className="flex-1 min-h-0 overflow-y-auto">
+              <p className="text-sm">{description}</p>
+            </div>
+            {selection.kind === "site" && selection.data.image && (
+              <figure className="m-0">
+                <img
+                  src={selection.data.image.src}
+                  alt={selection.data.image.alt}
+                  loading="lazy"
+                  className="block w-full max-h-72 rounded-md object-contain"
+                />
+                <figcaption className="mt-1.5 text-right text-xs text-muted-foreground">
+                  <a
+                    href={selection.data.image.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline-offset-2 hover:underline hover:text-foreground"
+                  >
+                    {selection.data.image.credit}
+                  </a>
+                </figcaption>
+              </figure>
+            )}
           </>
         )}
       </DrawerContent>

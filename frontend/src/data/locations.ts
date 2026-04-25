@@ -30,15 +30,14 @@ export const locations = {
 
   // South Asia
   mumbai:           [73, 19],
-  southernIndia:    [77, 8],
+  kanyakumari:      [77.54, 8.09],
   chennai:          [80, 13],
-  odishaCoast:      [86, 20],
-  dhaka:            [90, 23],
+  puri:             [85.83, 19.81],
+  dhaka:            [90.39, 23.76],
 
   // Southeast Asia
-  sittwe:           [93, 20],
-  yangon:           [96, 17],
   chumphon:         [99, 10],
+  chiangMai:        [98.99, 18.79],
   kualaLumpur:      [102, 3],
   sunda:           [105, 0],
   wallacea:         [120, -5],
@@ -54,6 +53,10 @@ export const locations = {
   westernChina:     [100, 35],
   centralChina:     [110, 32],
   easternChina:     [118, 30],
+  southChinaCoast:  [113, 22],
+  vietnamN:         [107, 22],
+  yunnan:           [102, 25],
+  fuzhou:           [119.3, 26.07],
   zhoukoudian:      [115.8695, 39.6547],
 
   // North Asia
@@ -105,7 +108,7 @@ export const locations = {
   monteVerde:       [-73.203, -41.503],
 
   // Austronesian / Melanesia
-  taiwan:           [121, 25],
+  kaohsiung:        [120.30, 22.62],
   manila:           [121, 14.6],
   sulawesi:         [120, -2],
   portMoresby:      [147, -9.5],

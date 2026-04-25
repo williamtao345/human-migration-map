@@ -12,10 +12,11 @@ function App() {
   const [year, setYear] = useState(MIN_YEAR);
   const [selection, setSelection] = useState<DrawerSelection | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [mapReady, setMapReady] = useState(false);
   const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || !mapReady) return;
     let frame = 0;
     const tick = (now: number) => {
       if (startTimeRef.current === null) startTimeRef.current = now;
@@ -30,7 +31,7 @@ function App() {
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [isPlaying]);
+  }, [isPlaying, mapReady]);
 
   const handleYearChange = (next: number) => {
     if (isPlaying) setIsPlaying(false);
@@ -43,8 +44,10 @@ function App() {
       <div className="flex-1 relative flex flex-col min-h-0">
         <MapView
           year={year}
+          ready={mapReady}
           onRouteClick={(route) => setSelection({ kind: "route", data: route })}
           onSiteClick={(site) => setSelection({ kind: "site", data: site })}
+          onReady={() => setMapReady(true)}
         />
         <TimelineSlider year={year} onYearChange={handleYearChange} />
         <RouteDrawer selection={selection} onClose={() => setSelection(null)} />
