@@ -5,7 +5,7 @@ import TimelineSlider from "./components/TimelineSlider";
 import RouteDrawer, { type DrawerSelection } from "./components/RouteDrawer";
 
 const MIN_YEAR = -65000;
-const MAX_YEAR = 1200;
+const MAX_YEAR = 1300;
 const AUTOPLAY_DURATION_MS = 30000;
 
 function App() {

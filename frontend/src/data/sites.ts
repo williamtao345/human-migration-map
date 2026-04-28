@@ -182,6 +182,14 @@ export const sites: Site[] = [
     },
   },
   {
+    id: "page-ladson",
+    name: "Page-Ladson",
+    location: "pageLadson",
+    year: -14450,
+    description:
+      "A submerged sinkhole site in the Aucilla River of north Florida, where stone tools were recovered alongside butchered mastodon bones in stratified deposits dated to about 14,450 years ago. Together with Monte Verde, Page-Ladson decisively pushed the accepted age of human presence in the Americas well before the Clovis horizon. Its location in the eastern interior of North America also implies that pre-Clovis peoples had already dispersed widely across the continent by this time, far from the Pacific coastal entry route.",
+  },
+  {
     id: "monte-verde",
     name: "Monte Verde",
     location: "monteVerde",
@@ -224,5 +232,45 @@ export const sites: Site[] = [
       sourceUrl:
         "https://commons.wikimedia.org/wiki/File:Upward_Sun_River_Site_(27633483483).jpg",
     },
+  },
+  {
+    id: "kennewick-man",
+    name: "Kennewick Man",
+    location: "kennewick",
+    year: -9500,
+    description:
+      "A nearly complete skeleton of an adult man eroded from the bank of the Columbia River near Kennewick, Washington, in 1996 and dated to roughly 8,500 to 9,500 years ago. Early studies of his cranial morphology suggested affinity with Ainu or Polynesian populations rather than Native Americans, fueling years of legal and scientific dispute. Genome sequencing in 2015 firmly established that he is most closely related to contemporary Native Americans, consistent with continuity from the founding population of the Americas. He was repatriated to a coalition of Columbia Basin tribes in 2017.",
+  },
+  {
+    id: "xihuatoxtla",
+    name: "Xihuatoxtla Shelter",
+    location: "balsasValley",
+    year: -8700,
+    description:
+      "A rock shelter in the Central Balsas River Valley of Guerrero, Mexico, which has produced the earliest direct evidence of domesticated maize and squash, dated to about 8,700 years ago. Starch grains and phytoliths recovered from milling stones document the early stages of maize domestication from wild teosinte, whose natural range centers on this region. Maize cultivation later fueled the population expansion roughly 5,000 years ago that gave rise to Mesoamerican farming societies.",
+  },
+  {
+    id: "saqqaq-qeqertasussuk",
+    name: "Qeqertasussuk (Saqqaq)",
+    location: "diskoBay",
+    year: -4400,
+    description:
+      "A frozen Paleo-Eskimo site on Qeqertasussuk island in Disko Bay, West Greenland, occupied during the early Saqqaq phase around 2400 to 1400 BCE. Its permafrozen culture layers preserved an unusually complete record of organic material, including wood, bone, baleen, and skin, giving an exceptionally detailed picture of early Arctic Small Tool tradition life. Saqqaq peoples were part of the Paleo-Eskimo migration that reached Greenland about 4,500 years ago, marking the easternmost extension of that pre-Inuit Arctic dispersal.",
+  },
+  {
+    id: "toluquilla",
+    name: "Toluquilla / Sierra Gorda",
+    location: "sierraGorda",
+    year: 600,
+    description:
+      "A pre-Hispanic mountain site in the Sierra Gorda of Querétaro, occupied roughly 200 to 900 CE and sustained largely by cinnabar (mercury sulfide) mining rather than agriculture. Ancient DNA from Sierra Gorda burials shows strong population continuity before, during, and after the Medieval Warm Period droughts of 900 to 1300 CE, refuting earlier hypotheses of large-scale population replacement by Aridoamerican groups. The mining-based economy made the community less vulnerable to drought than nearby agricultural settlements.",
+  },
+  {
+    id: "canada-de-la-virgen",
+    name: "Cañada de la Virgen",
+    location: "canadaDeLaVirgen",
+    year: 750,
+    description:
+      "An Otomí ceremonial and astronomical center in Guanajuato that flourished between 600 and 900 CE before being abandoned around 1000 to 1100 CE. Unlike the mining settlement of Toluquilla, Cañada de la Virgen depended on agriculture, and its abandonment coincides with the Medieval Warm Period droughts that reshaped the Aridoamerica/Mesoamerica frontier. Pre-Hispanic genomes from the site carry a distinct ghost ancestry, UPopA2 (~17%), separate from the UPopA component found in present-day Mixe.",
   },
 ];

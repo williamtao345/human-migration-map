@@ -34,7 +34,7 @@ export default function TimelineSlider({
             <Badge variant="secondary">{getEra(year)}</Badge>
           </div>
         </div>
-        <span>1200 CE</span>
+        <span>1300 CE</span>
       </div>
     </div>
   );

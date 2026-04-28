@@ -1,7 +1,7 @@
-// Timeline range: -200000 (200 kya) to 1200 (1200 CE)
+// Timeline range: -200000 (200 kya) to 1300 (1300 CE)
 // Negative = years before present, positive = CE
 const MIN_YEAR = -65000;
-const MAX_YEAR = 1200;
+const MAX_YEAR = 1300;
 
 // Convert slider position (0–1) to year
 export function sliderToYear(t: number): number {

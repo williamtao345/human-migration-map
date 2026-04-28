@@ -88,6 +88,7 @@ export const locations = {
   iberia:           [-1, 40],
 
   // Beringia / Americas
+  chukotka:         [175, 66],          // verified — Chukchi Peninsula center (Wikipedia)
   beringStrait:     [-169, 65],
   alaska:           [-150, 63],
   upwardSunRiver:   [-145.76, 63.71],
@@ -106,6 +107,47 @@ export const locations = {
   nArgentina:       [-65, -30],
   sArgentina:       [-68, -40],
   monteVerde:       [-73.203, -41.503],
+  pageLadson:       [-83.99, 30.08],    // verified — Aucilla River sinkhole (Wikipedia)
+  kennewick:        [-119.21, 46.24],   // verified — Columbia Park, Kennewick WA
+
+  // Northern Branch eastward expansion across North America (city waypoints)
+  whitehorse:       [-135.05, 60.72],   // Whitehorse, Yukon — corridor entry
+  edmonton:         [-113.49, 53.55],   // Edmonton, Alberta — Ice-Free Corridor mouth
+  billings:         [-108.50, 45.78],   // Billings, Montana — proxy for Anzick
+  chicago:          [-87.63, 41.88],    // Chicago, Illinois — Great Lakes
+  pittsburgh:       [-79.99, 40.44],    // Pittsburgh, PA — proxy for Meadowcroft
+  richmond:         [-77.44, 37.54],    // Richmond, VA — proxy for Cactus Hill
+  augusta:          [-82.00, 33.47],    // Augusta, GA — proxy for Topper
+  tallahassee:      [-84.28, 30.44],    // Tallahassee, FL — proxy for Page-Ladson
+
+  // North American Arctic — shared
+  utqiagvik:        [-156.79, 71.29],   // verified — Utqiagvik (Barrow), Alaska
+
+  // Paleo-Eskimo route (High Arctic Archipelago)
+  banksIsland:      [-121.51, 73.08],   // verified — Banks Island center (Wikipedia)
+  highArcticParry:  [-93.00, 74.33],    // verified — Parry Channel (Wikipedia)
+  ellesmere:        [-78.00, 80.17],    // verified — Ellesmere Island center (Wikipedia)
+  independenceFjord:[-21.90, 82.25],    // verified — fjord mouth, NE Greenland (Wikipedia)
+  diskoBay:         [-51.18, 68.82],    // verified — Qasigiannguit / Qeqertasussuk site (Wikipedia)
+
+  // Thule route (mainland Canadian Arctic)
+  mackenzieDelta:   [-135.50, 69.33],   // verified — delta center (NASA / Britannica)
+  coronationGulf:   [-112.00, 68.13],   // verified — Geographic.org
+  melvillePeninsula:[-83.72, 68.05],    // verified — Wikipedia
+  foxeBasin:        [-77.92, 65.93],    // verified — Geographic.org
+  baffinIsland:     [-69.60, 66.83],    // verified — Baffin Island center (latlong.net)
+  thuleGreenland:   [-68.70, 76.53],    // verified — Pituffik / Thule AB
+  nGreenland:       [-55.00, 78.00],
+
+  // Mesoamerica
+  balsasValley:     [-99.40, 18.37],    // verified — Xihuatoxtla Shelter (Megalithic Portal)
+  sierraGorda:      [-99.53, 20.88],    // verified — Toluquilla site (INAH)
+  canadaDeLaVirgen: [-100.93, 20.86],   // verified — Wikipedia
+
+  // NW South America — Polynesian-Native American contact landfall
+  // Ioannidis et al. 2020 trace the Native American signal in eastern Polynesians
+  // to a population most closely related to the Zenú of present-day Colombia.
+  tumaco:           [-78.79, 1.81],     // verified — Tumaco, Pacific coast of Colombia
 
   // Austronesian / Melanesia
   kaohsiung:        [120.30, 22.62],

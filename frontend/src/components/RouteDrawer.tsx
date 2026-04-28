@@ -27,6 +27,7 @@ export default function RouteDrawer({
         ? `Notable finding · ${formatYear(selection.data.year)}`
         : "";
   const description = selection?.data.description ?? "";
+  const paragraphs = description.split(/\n+/).filter((p) => p.trim() !== "");
 
   return (
     <Drawer
@@ -41,8 +42,10 @@ export default function RouteDrawer({
               <DrawerTitle>{title}</DrawerTitle>
               <DrawerDescription>{subtitle}</DrawerDescription>
             </DrawerHeader>
-            <div className="flex-1 min-h-0 overflow-y-auto">
-              <p className="text-sm">{description}</p>
+            <div className="flex-1 min-h-0 overflow-y-auto text-sm space-y-3">
+              {paragraphs.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
             </div>
             {selection.kind === "site" && selection.data.image && (
               <figure className="m-0">
