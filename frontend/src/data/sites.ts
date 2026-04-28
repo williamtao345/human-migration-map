@@ -188,6 +188,13 @@ export const sites: Site[] = [
     year: -14450,
     description:
       "A submerged sinkhole site in the Aucilla River of north Florida, where stone tools were recovered alongside butchered mastodon bones in stratified deposits dated to about 14,450 years ago. Together with Monte Verde, Page-Ladson decisively pushed the accepted age of human presence in the Americas well before the Clovis horizon. Its location in the eastern interior of North America also implies that pre-Clovis peoples had already dispersed widely across the continent by this time, far from the Pacific coastal entry route.",
+    image: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Jefferson-Madison_Aucilla_River_south01.jpg",
+      alt: "The Aucilla River in north Florida, where the submerged Page-Ladson sinkhole site lies",
+      credit: "Ebyabe · CC BY-SA 3.0",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Jefferson-Madison_Aucilla_River_south01.jpg",
+    },
   },
   {
     id: "monte-verde",
@@ -240,6 +247,12 @@ export const sites: Site[] = [
     year: -9500,
     description:
       "A nearly complete skeleton of an adult man eroded from the bank of the Columbia River near Kennewick, Washington, in 1996 and dated to roughly 8,500 to 9,500 years ago. Early studies of his cranial morphology suggested affinity with Ainu or Polynesian populations rather than Native Americans, fueling years of legal and scientific dispute. Genome sequencing in 2015 firmly established that he is most closely related to contemporary Native Americans, consistent with continuity from the founding population of the Americas. He was repatriated to a coalition of Columbia Basin tribes in 2017.",
+    image: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/4/40/Kennewick_Man.jpg",
+      alt: "Resin cast of the Kennewick Man skull",
+      credit: "Ghedoghedo · CC BY-SA 4.0",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Kennewick_Man.jpg",
+    },
   },
   {
     id: "xihuatoxtla",
@@ -248,6 +261,13 @@ export const sites: Site[] = [
     year: -8700,
     description:
       "A rock shelter in the Central Balsas River Valley of Guerrero, Mexico, which has produced the earliest direct evidence of domesticated maize and squash, dated to about 8,700 years ago. Starch grains and phytoliths recovered from milling stones document the early stages of maize domestication from wild teosinte, whose natural range centers on this region. Maize cultivation later fueled the population expansion roughly 5,000 years ago that gave rise to Mesoamerican farming societies.",
+    image: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/b/be/Teosinte_-_Ethnobotanical_Garden_-_Oaxaca%2C_Mexico_-_7_July_2009.jpg",
+      alt: "Teosinte, the wild grass ancestor of maize first domesticated in the Central Balsas Valley",
+      credit: "Doug Knuth · CC BY-SA 2.0",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Teosinte_-_Ethnobotanical_Garden_-_Oaxaca,_Mexico_-_7_July_2009.jpg",
+    },
   },
   {
     id: "saqqaq-qeqertasussuk",
@@ -256,6 +276,13 @@ export const sites: Site[] = [
     year: -4400,
     description:
       "A frozen Paleo-Eskimo site on Qeqertasussuk island in Disko Bay, West Greenland, occupied during the early Saqqaq phase around 2400 to 1400 BCE. Its permafrozen culture layers preserved an unusually complete record of organic material, including wood, bone, baleen, and skin, giving an exceptionally detailed picture of early Arctic Small Tool tradition life. Saqqaq peoples were part of the Paleo-Eskimo migration that reached Greenland about 4,500 years ago, marking the easternmost extension of that pre-Inuit Arctic dispersal.",
+    image: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/a/aa/SITE_ARCHEOLOGIQUE_QAJAA_SAQQAQ_CULTURE_2.jpg",
+      alt: "The Qajaa Saqqaq-culture archaeological site in West Greenland",
+      credit: "J. Hollesen, H. Mathiessen, B. Erbeling · CC BY-SA 4.0",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:SITE_ARCHEOLOGIQUE_QAJAA_SAQQAQ_CULTURE_2.jpg",
+    },
   },
   {
     id: "toluquilla",
@@ -264,6 +291,13 @@ export const sites: Site[] = [
     year: 600,
     description:
       "A pre-Hispanic mountain site in the Sierra Gorda of Querétaro, occupied roughly 200 to 900 CE and sustained largely by cinnabar (mercury sulfide) mining rather than agriculture. Ancient DNA from Sierra Gorda burials shows strong population continuity before, during, and after the Medieval Warm Period droughts of 900 to 1300 CE, refuting earlier hypotheses of large-scale population replacement by Aridoamerican groups. The mining-based economy made the community less vulnerable to drought than nearby agricultural settlements.",
+    image: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/8/88/Sierra_Gorda_de_Quer%C3%A9taro.jpg",
+      alt: "Mountain landscape of the Sierra Gorda in Querétaro, the setting of the Toluquilla mining site",
+      credit: "Juan Carlos Fonseca Mata · CC BY-SA 4.0",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Sierra_Gorda_de_Quer%C3%A9taro.jpg",
+    },
   },
   {
     id: "canada-de-la-virgen",
@@ -272,5 +306,12 @@ export const sites: Site[] = [
     year: 750,
     description:
       "An Otomí ceremonial and astronomical center in Guanajuato that flourished between 600 and 900 CE before being abandoned around 1000 to 1100 CE. Unlike the mining settlement of Toluquilla, Cañada de la Virgen depended on agriculture, and its abandonment coincides with the Medieval Warm Period droughts that reshaped the Aridoamerica/Mesoamerica frontier. Pre-Hispanic genomes from the site carry a distinct ghost ancestry, UPopA2 (~17%), separate from the UPopA component found in present-day Mixe.",
+    image: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Pir%C3%A1mide_Principal_de_Ca%C3%B1ada_de_la_Virgen%2C_Guanajuato%2C_M%C3%A9xico.jpg",
+      alt: "The main pyramid at Cañada de la Virgen, Guanajuato",
+      credit: "Manuel Alberto de Anda Gómez · CC BY-SA 4.0",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Pir%C3%A1mide_Principal_de_Ca%C3%B1ada_de_la_Virgen,_Guanajuato,_M%C3%A9xico.jpg",
+    },
   },
 ];
