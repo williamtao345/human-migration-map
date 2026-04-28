@@ -16,7 +16,7 @@ export default function TimelineSlider({
   const sliderValue = Math.round(yearToSlider(year) * SLIDER_MAX);
 
   return (
-    <div className="h-20 border-t px-8 flex flex-col justify-center gap-1">
+    <div className="h-20 border-t px-8 flex flex-col justify-center gap-1 bg-background/50 backdrop-blur-sm">
       <Slider
         min={SLIDER_MIN}
         max={SLIDER_MAX}

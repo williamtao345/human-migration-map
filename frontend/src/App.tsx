@@ -39,9 +39,8 @@ function App() {
   };
 
   return (
-    <div className="h-screen flex flex-col">
-      <Header />
-      <div className="flex-1 relative flex flex-col min-h-0">
+    <div className="h-screen relative">
+      <div className="absolute inset-0 flex">
         <MapView
           year={year}
           ready={mapReady}
@@ -49,9 +48,14 @@ function App() {
           onSiteClick={(site) => setSelection({ kind: "site", data: site })}
           onReady={() => setMapReady(true)}
         />
-        <TimelineSlider year={year} onYearChange={handleYearChange} />
-        <RouteDrawer selection={selection} onClose={() => setSelection(null)} />
       </div>
+      <div className="absolute inset-x-0 top-0 z-10">
+        <Header />
+      </div>
+      <div className="absolute inset-x-0 bottom-0 z-10">
+        <TimelineSlider year={year} onYearChange={handleYearChange} />
+      </div>
+      <RouteDrawer selection={selection} onClose={() => setSelection(null)} />
     </div>
   );
 }
