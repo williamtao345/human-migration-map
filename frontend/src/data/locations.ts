@@ -120,24 +120,15 @@ export const locations = {
   augusta:          [-82.00, 33.47],    // Augusta, GA — proxy for Topper
   tallahassee:      [-84.28, 30.44],    // Tallahassee, FL — proxy for Page-Ladson
 
-  // North American Arctic — shared
+  // Paleo-Eskimo route (NW Alaska + High Arctic Archipelago + Greenland)
+  capeKrusenstern:  [-163.50, 67.13],   // verified — Cape Krusenstern, NW Alaska (ASTt landfall)
   utqiagvik:        [-156.79, 71.29],   // verified — Utqiagvik (Barrow), Alaska
-
-  // Paleo-Eskimo route (High Arctic Archipelago)
+  mackenzieDelta:   [-135.50, 69.33],   // verified — Mackenzie Delta, NW Canadian coast
   banksIsland:      [-121.51, 73.08],   // verified — Banks Island center (Wikipedia)
   highArcticParry:  [-93.00, 74.33],    // verified — Parry Channel (Wikipedia)
   ellesmere:        [-78.00, 80.17],    // verified — Ellesmere Island center (Wikipedia)
-  independenceFjord:[-21.90, 82.25],    // verified — fjord mouth, NE Greenland (Wikipedia)
+  nwGreenland:      [-68.70, 76.53],    // verified — Pituffik / Thule area, NW Greenland landfall
   diskoBay:         [-51.18, 68.82],    // verified — Qasigiannguit / Qeqertasussuk site (Wikipedia)
-
-  // Thule route (mainland Canadian Arctic)
-  mackenzieDelta:   [-135.50, 69.33],   // verified — delta center (NASA / Britannica)
-  coronationGulf:   [-112.00, 68.13],   // verified — Geographic.org
-  melvillePeninsula:[-83.72, 68.05],    // verified — Wikipedia
-  foxeBasin:        [-77.92, 65.93],    // verified — Geographic.org
-  baffinIsland:     [-69.60, 66.83],    // verified — Baffin Island center (latlong.net)
-  thuleGreenland:   [-68.70, 76.53],    // verified — Pituffik / Thule AB
-  nGreenland:       [-55.00, 78.00],
 
   // Mesoamerica
   balsasValley:     [-99.40, 18.37],    // verified — Xihuatoxtla Shelter (Megalithic Portal)
@@ -164,6 +155,7 @@ export const locations = {
   tahiti:           [-149.4, -17.7],
   tuamotu:          [-145, -16],
   marquesas:        [-139.5, -9.8],
+  mangareva:        [-134.97, -23.13],   // Gambier Islands — admixture signal site (Ioannidis 2020)
   rapaNui:          [-109.3, -27.1],
 } as const satisfies Record<string, readonly [number, number]>;
 
