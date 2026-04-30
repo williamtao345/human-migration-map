@@ -3,28 +3,42 @@ import Header from "./components/Header";
 import MapView from "./components/MapView";
 import TimelineSlider from "./components/TimelineSlider";
 import RouteDrawer, { type DrawerSelection } from "./components/RouteDrawer";
+import { MAX_YEAR, MIN_YEAR } from "./lib/timeline";
 
-const MIN_YEAR = -65000;
-const MAX_YEAR = 1300;
 const AUTOPLAY_DURATION_MS = 30000;
+type PlaybackStart = { time: number; year: number };
 
 function App() {
   const [year, setYear] = useState(MIN_YEAR);
   const [selection, setSelection] = useState<DrawerSelection | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [mapReady, setMapReady] = useState(false);
-  const startTimeRef = useRef<number | null>(null);
+  const startTimeRef = useRef<PlaybackStart | null>(null);
+  const yearRef = useRef(year);
+
+  useEffect(() => {
+    yearRef.current = year;
+  }, [year]);
 
   useEffect(() => {
     if (!isPlaying || !mapReady) return;
     let frame = 0;
     const tick = (now: number) => {
-      if (startTimeRef.current === null) startTimeRef.current = now;
-      const elapsed = now - startTimeRef.current;
-      const t = Math.min(elapsed / AUTOPLAY_DURATION_MS, 1);
-      setYear(MIN_YEAR + (MAX_YEAR - MIN_YEAR) * t);
-      if (t >= 1) {
+      if (startTimeRef.current === null) {
+        startTimeRef.current = { time: now, year: yearRef.current };
+      }
+      const { time, year: startYear } = startTimeRef.current;
+      const remainingSpan = MAX_YEAR - startYear;
+      const elapsed = now - time;
+      const remainingDuration =
+        AUTOPLAY_DURATION_MS * (remainingSpan / (MAX_YEAR - MIN_YEAR));
+      const t = remainingDuration > 0 ? Math.min(elapsed / remainingDuration, 1) : 1;
+      const nextYear = startYear + remainingSpan * t;
+      setYear(nextYear);
+      if (nextYear >= MAX_YEAR) {
+        setYear(MAX_YEAR);
         setIsPlaying(false);
+        startTimeRef.current = null;
         return;
       }
       frame = requestAnimationFrame(tick);
@@ -35,7 +49,24 @@ function App() {
 
   const handleYearChange = (next: number) => {
     if (isPlaying) setIsPlaying(false);
+    startTimeRef.current = null;
     setYear(next);
+  };
+
+  const handlePlayToggle = () => {
+    startTimeRef.current = null;
+    if (isPlaying) {
+      setIsPlaying(false);
+      return;
+    }
+    if (year >= MAX_YEAR) setYear(MIN_YEAR);
+    setIsPlaying(true);
+  };
+
+  const handleReplay = () => {
+    startTimeRef.current = null;
+    setYear(MIN_YEAR);
+    setIsPlaying(true);
   };
 
   return (
@@ -53,7 +84,14 @@ function App() {
         <Header />
       </div>
       <div className="absolute inset-x-0 bottom-0 z-10">
-        <TimelineSlider year={year} onYearChange={handleYearChange} />
+        <TimelineSlider
+          year={year}
+          isPlaying={isPlaying}
+          disabled={!mapReady}
+          onYearChange={handleYearChange}
+          onPlayToggle={handlePlayToggle}
+          onReplay={handleReplay}
+        />
       </div>
       <RouteDrawer selection={selection} onClose={() => setSelection(null)} />
     </div>

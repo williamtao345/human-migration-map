@@ -1,16 +1,20 @@
-// Timeline range: -200000 (200 kya) to 1300 (1300 CE)
+// Timeline range: -65000 (65 kya) to 1300 (1300 CE)
 // Negative = years before present, positive = CE
-const MIN_YEAR = -65000;
-const MAX_YEAR = 1300;
+export const MIN_YEAR = -65000;
+export const MAX_YEAR = 1300;
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}
 
 // Convert slider position (0–1) to year
 export function sliderToYear(t: number): number {
-  return MIN_YEAR + (MAX_YEAR - MIN_YEAR) * t;
+  return MIN_YEAR + (MAX_YEAR - MIN_YEAR) * clamp(t, 0, 1);
 }
 
 // Convert year to slider position (0–1)
 export function yearToSlider(year: number): number {
-  return (year - MIN_YEAR) / (MAX_YEAR - MIN_YEAR);
+  return clamp((year - MIN_YEAR) / (MAX_YEAR - MIN_YEAR), 0, 1);
 }
 
 // Get era label for a given year

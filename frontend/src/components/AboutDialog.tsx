@@ -7,6 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { BookOpen } from "lucide-react";
 
 type Entry = {
   citation: React.ReactNode;
@@ -129,7 +130,12 @@ export default function AboutDialog() {
   return (
     <Dialog>
       <DialogTrigger
-        render={<Button variant="default">Annotated bibliography</Button>}
+        render={
+          <Button variant="default">
+            <BookOpen data-icon="inline-start" />
+            Sources
+          </Button>
+        }
       />
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>

@@ -214,6 +214,7 @@ export default function MapView({
     { kind: "route" | "site"; id: string; x: number; y: number } | null
   >(null);
   const [mapStyle, setMapStyle] = useState<StyleSpecification | null>(null);
+  const [mapError, setMapError] = useState(false);
   const mapRef = useRef<MapRef | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -249,6 +250,9 @@ export default function MapView({
       .then((r) => r.json() as Promise<StyleSpecification>)
       .then((style) => {
         if (!cancelled) setMapStyle(patchWaterColors(style));
+      })
+      .catch(() => {
+        if (!cancelled) setMapError(true);
       });
     return () => {
       cancelled = true;
@@ -320,14 +324,14 @@ export default function MapView({
         ? sites.find((s) => s.id === hover.id)?.name
         : null;
 
-  useEffect(() => {
-    if (!hover || !hoveredLabel) {
+  const positionPopoverRef = useCallback((popover: HTMLDivElement | null) => {
+    popoverRef.current = popover;
+    if (!popover) {
       setPopoverPos(null);
       return;
     }
     const container = containerRef.current;
-    const popover = popoverRef.current;
-    if (!container || !popover) return;
+    if (!container || !hover || !hoveredLabel) return;
     const { width: cw, height: ch } = container.getBoundingClientRect();
     const { width: pw, height: ph } = popover.getBoundingClientRect();
     const margin = 8;
@@ -341,8 +345,20 @@ export default function MapView({
     setPopoverPos({ left, top });
   }, [hover, hoveredLabel]);
 
+  if (mapError) {
+    return (
+      <div className="flex flex-1 items-center justify-center bg-background px-6 text-center text-sm text-muted-foreground">
+        Map tiles could not be loaded. Check the network connection and refresh.
+      </div>
+    );
+  }
+
   if (!mapStyle) {
-    return <div className="flex-1 bg-background" />;
+    return (
+      <div className="flex flex-1 items-center justify-center bg-background text-sm text-muted-foreground">
+        Loading map...
+      </div>
+    );
   }
 
   return (
@@ -412,7 +428,7 @@ export default function MapView({
         ref={overlayRef}
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        {ready &&visibleEndpoints.flatMap((endpoint) => {
+        {ready && visibleEndpoints.flatMap((endpoint) => {
           const [lng, lat] = locations[endpoint.location];
           return WORLD_COPY_OFFSETS.map((offset) => (
             <div
@@ -433,7 +449,7 @@ export default function MapView({
             </div>
           ));
         })}
-        {ready &&visibleSites.flatMap((site) => {
+        {ready && visibleSites.flatMap((site) => {
           const [lng, lat] = locations[site.location];
           return WORLD_COPY_OFFSETS.map((offset) => (
             <button
@@ -484,7 +500,7 @@ export default function MapView({
       </div>
       {hover && hoveredLabel && (
         <div
-          ref={popoverRef}
+          ref={positionPopoverRef}
           className="pointer-events-none absolute z-10 rounded-md border bg-popover px-2 py-1 text-sm text-popover-foreground shadow-md whitespace-nowrap"
           style={{
             left: popoverPos?.left ?? -9999,
@@ -495,6 +511,32 @@ export default function MapView({
           {hoveredLabel}
         </div>
       )}
+      <div className="pointer-events-none absolute left-3 top-16 z-10 w-48 rounded-md border bg-background/80 p-3 text-xs shadow-sm backdrop-blur-sm sm:left-4">
+        <div className="mb-2 font-medium text-foreground">Visible now</div>
+        <div className="space-y-1.5 text-muted-foreground">
+          <div className="flex items-center justify-between gap-3">
+            <span className="flex items-center gap-2">
+              <span className="h-0.5 w-6 rounded-full bg-primary" />
+              Routes
+            </span>
+            <span className="tabular-nums text-foreground">{routeData.length}</span>
+          </div>
+          <div className="flex items-center justify-between gap-3">
+            <span className="flex items-center gap-2">
+              <span className="size-2 rounded-full bg-foreground" />
+              Reached places
+            </span>
+            <span className="tabular-nums text-foreground">{visibleEndpoints.length}</span>
+          </div>
+          <div className="flex items-center justify-between gap-3">
+            <span className="flex items-center gap-2">
+              <span className="size-2 rotate-45 bg-amber-600" />
+              Finds
+            </span>
+            <span className="tabular-nums text-foreground">{visibleSites.length}</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
