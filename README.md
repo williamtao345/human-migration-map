@@ -29,7 +29,6 @@ npm run dev
 
 ```
 ├── CLAUDE.md               # Guidance for Claude Code
-├── migration-events.md     # Reference data for migration events
 ├── dev.sh                  # Start dev server
 └── frontend/               # React app
     └── src/

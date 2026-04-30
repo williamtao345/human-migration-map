@@ -531,7 +531,7 @@ export default function MapView({
           <div className="flex items-center justify-between gap-3">
             <span className="flex items-center gap-2">
               <span className="size-2 rotate-45 bg-amber-600" />
-              Finds
+              Discoveries
             </span>
             <span className="tabular-nums text-foreground">{visibleSites.length}</span>
           </div>

@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import MapView from "./components/MapView";
 import TimelineSlider from "./components/TimelineSlider";
 import RouteDrawer, { type DrawerSelection } from "./components/RouteDrawer";
+import LandingOverlay from "./components/LandingOverlay";
 import { MAX_YEAR, MIN_YEAR } from "./lib/timeline";
 
 const AUTOPLAY_DURATION_MS = 30000;
@@ -11,8 +12,9 @@ type PlaybackStart = { time: number; year: number };
 function App() {
   const [year, setYear] = useState(MIN_YEAR);
   const [selection, setSelection] = useState<DrawerSelection | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [mapReady, setMapReady] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
   const startTimeRef = useRef<PlaybackStart | null>(null);
   const yearRef = useRef(year);
 
@@ -94,6 +96,16 @@ function App() {
         />
       </div>
       <RouteDrawer selection={selection} onClose={() => setSelection(null)} />
+      {!hasStarted && (
+        <LandingOverlay
+          onStart={() => {
+            setHasStarted(true);
+            startTimeRef.current = null;
+            setYear(MIN_YEAR);
+            setIsPlaying(true);
+          }}
+        />
+      )}
     </div>
   );
 }

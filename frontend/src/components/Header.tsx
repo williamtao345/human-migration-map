@@ -1,4 +1,5 @@
-import AboutDialog from "./AboutDialog";
+import { Button } from "@/components/ui/button";
+import SourcesDialog from "./SourcesDialog";
 
 export default function Header() {
   return (
@@ -10,7 +11,28 @@ export default function Header() {
           — An Interactive Map of Human Migration
         </span>
       </h1>
-      <AboutDialog />
+      <div className="flex items-center gap-2">
+        <SourcesDialog />
+        <Button
+          variant="outline"
+          size="icon"
+          render={
+            <a
+              href="https://github.com/williamtao345/human-migration-map"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="View source on GitHub"
+              title="View source on GitHub"
+            />
+          }
+        >
+          <img
+            src={`${import.meta.env.BASE_URL}github.svg`}
+            alt=""
+            className="size-4"
+          />
+        </Button>
+      </div>
     </header>
   );
 }

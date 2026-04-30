@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { BookOpen } from "lucide-react";
+import { BookMarked } from "lucide-react";
 
 type Entry = {
   citation: React.ReactNode;
@@ -126,13 +126,13 @@ const entries: Entry[] = [
   },
 ];
 
-export default function AboutDialog() {
+export default function SourcesDialog() {
   return (
     <Dialog>
       <DialogTrigger
         render={
           <Button variant="default">
-            <BookOpen data-icon="inline-start" />
+            <BookMarked data-icon="inline-start" />
             Sources
           </Button>
         }
