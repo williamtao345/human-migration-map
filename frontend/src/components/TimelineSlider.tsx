@@ -28,13 +28,13 @@ export default function TimelineSlider({
   const PlayIcon = isPlaying ? Pause : Play;
 
   return (
-    <div className="min-h-24 border-t bg-background/70 px-4 py-3 backdrop-blur-sm sm:h-24 sm:px-8">
+    <div className="border-t bg-background/70 px-4 py-5 backdrop-blur-sm sm:px-8">
       <div className="grid h-full grid-cols-[auto_1fr] items-center gap-3">
         <div className="flex items-center gap-1">
           <Button
             type="button"
             variant="secondary"
-            size="icon"
+            size="icon-lg"
             disabled={disabled}
             aria-label={isPlaying ? "Pause timeline" : isComplete ? "Replay timeline" : "Play timeline"}
             onClick={onPlayToggle}
@@ -44,7 +44,7 @@ export default function TimelineSlider({
           <Button
             type="button"
             variant="ghost"
-            size="icon"
+            size="icon-lg"
             disabled={disabled}
             aria-label="Restart timeline"
             onClick={onReplay}

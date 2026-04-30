@@ -511,7 +511,7 @@ export default function MapView({
           {hoveredLabel}
         </div>
       )}
-      <div className="pointer-events-none absolute left-3 top-16 z-10 w-48 rounded-md border bg-background/80 p-3 text-xs shadow-sm backdrop-blur-sm sm:left-4">
+      <div className="pointer-events-none absolute left-3 top-16 z-10 w-48 rounded-md border bg-background/70 p-3 text-xs shadow-sm backdrop-blur-sm sm:left-4">
         <div className="mb-2 font-medium text-foreground">Visible now</div>
         <div className="space-y-1.5 text-muted-foreground">
           <div className="flex items-center justify-between gap-3">

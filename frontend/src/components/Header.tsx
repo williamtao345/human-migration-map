@@ -4,15 +4,17 @@ import SourcesDialog from "./SourcesDialog";
 export default function Header() {
   return (
     <header className="flex min-h-12 items-center justify-between gap-3 border-b bg-background/70 px-4 py-2 backdrop-blur-sm">
-      <h1 className="min-w-0 text-base font-semibold tracking-tight sm:text-lg">
-        <span className="block truncate sm:inline">Peopling the Planet</span>
-        <span className="hidden sm:inline text-muted-foreground font-normal">
-          {" "}
-          — An Interactive Map of Human Migration
+      <h1 className="flex min-w-0 items-baseline gap-3 text-base font-semibold tracking-tight sm:text-lg">
+        <span className="truncate">Peopling the Planet</span>
+        <span
+          aria-hidden
+          className="hidden sm:block h-4 w-px shrink-0 self-center bg-border"
+        />
+        <span className="hidden truncate font-normal text-muted-foreground sm:inline">
+          An Interactive Map of Human Migration
         </span>
       </h1>
       <div className="flex items-center gap-2">
-        <SourcesDialog />
         <Button
           variant="outline"
           size="icon"
@@ -32,6 +34,7 @@ export default function Header() {
             className="size-4"
           />
         </Button>
+        <SourcesDialog />
       </div>
     </header>
   );
