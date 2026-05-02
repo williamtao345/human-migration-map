@@ -28,7 +28,6 @@ npm run dev
 ## Project Structure
 
 ```
-├── CLAUDE.md               # Guidance for Claude Code
 ├── dev.sh                  # Start dev server
 └── frontend/               # React app
     └── src/
