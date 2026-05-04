@@ -43,7 +43,7 @@ const sourceRecords = {
       "Wood, B., & Harrison, T. (2011). The evolutionary context of the first hominins. Nature, 470(7334), 347-352.",
     url: "https://doi.org/10.1038/nature09709",
     annotation:
-      "Synthesis for early hominin evolution, useful for contextualizing Toumai, Ardi, Laetoli, Lucy, and early Homo without overloading each marker with specialist detail.",
+      "Review of the evolutionary context of the earliest hominins, especially Sahelanthropus, Orrorin, and Ardipithecus. Useful for framing Toumai and Ardi within debates about early hominin origins and fossil interpretation.",
     topic: "Early hominins",
   },
   "brunet-2002": {
@@ -67,7 +67,7 @@ const sourceRecords = {
   "leakey-hay-1979": {
     shortLabel: "Leakey & Hay 1979",
     citation:
-      "Leakey, M. D., & Hay, R. L. (1979). Pliocene footprints in the Laetolil Beds at Laetoli, northern Tanzania. Nature, 278, 317-323.",
+      "Leakey, M. D., & Hay, R. L. (1979). Pliocene footprints in the Laetolil Beds at Laetoli, northern Tanzania. Nature, 278(5702), 317-323.",
     url: "https://doi.org/10.1038/278317a0",
     annotation:
       "Original report of the Laetoli footprint trail, used for the direct behavioral evidence of early hominin bipedality.",
@@ -79,13 +79,13 @@ const sourceRecords = {
       "Johanson, D. C., & Taieb, M. (1976). Plio-Pleistocene hominid discoveries in Hadar, Ethiopia. Nature, 260(5549), 293-297.",
     url: "https://doi.org/10.1038/260293a0",
     annotation:
-      "Early report on the Hadar discoveries, supporting the Lucy marker and its A. afarensis context.",
+      "Early report on the Hadar hominin discoveries, supporting the Lucy marker and the fossil context later assigned to Australopithecus afarensis.",
     topic: "Early hominins",
   },
   "leakey-tobias-napier-1964": {
     shortLabel: "Leakey et al. 1964",
     citation:
-      "Leakey, L. S. B., Tobias, P. V., & Napier, J. R. (1964). A new species of the genus Homo from Olduvai Gorge. Nature, 202, 7-9.",
+      "Leakey, L. S. B., Tobias, P. V., & Napier, J. R. (1964). A new species of the genus Homo from Olduvai Gorge. Nature, 202(4927), 7-9.",
     url: "https://doi.org/10.1038/202007a0",
     annotation:
       "Original description of Homo habilis from Olduvai Gorge, the cleanest citation for the OH 7 marker.",
@@ -94,7 +94,7 @@ const sourceRecords = {
   "anton-2003": {
     shortLabel: "Anton 2003",
     citation:
-      "Anton, S. C. (2003). Natural history of Homo erectus. American Journal of Physical Anthropology, Suppl. 37, 126-170.",
+      "Anton, S. C. (2003). Natural history of Homo erectus. American Journal of Physical Anthropology, 122(S37), 126-170.",
     url: "https://doi.org/10.1002/ajpa.10399",
     annotation:
       "Review of Homo erectus distribution, anatomy, and evolutionary context, supporting the Java Man marker's broader H. erectus claims.",
@@ -232,7 +232,7 @@ const sourceRecords = {
       "Pedersen, M. W., et al. (2016). Postglacial viability and colonization in North America's ice-free corridor. Nature, 537(7618), 45-49.",
     url: "https://doi.org/10.1038/nature19085",
     annotation:
-      "Source for the late ecological viability of the ice-free corridor, supporting a coastal-first interpretation for earliest American settlement.",
+      "Source for the late ecological viability of the ice-free corridor, indirectly supporting a coastal-first interpretation by showing the corridor was unlikely to explain the earliest accepted American settlement.",
     topic: "Americas",
   },
   "rasmussen-2010-saqqaq": {
@@ -274,10 +274,10 @@ const sourceRecords = {
   "villa-islas-2023": {
     shortLabel: "Villa-Islas et al. 2023",
     citation:
-      "Villa-Islas, V., et al. (2023). Demographic history and genetic structure in pre-Hispanic Central Mexico. Science, 380(6645).",
+      "Villa-Islas, V., et al. (2023). Demographic history and genetic structure in pre-Hispanic Central Mexico. Science, 380(6645), eadd6142.",
     url: "https://doi.org/10.1126/science.add6142",
     annotation:
-      "Primary source for genomic continuity and structure in pre-Hispanic Central Mexico, including Sierra Gorda and Canada de la Virgen claims.",
+      "Primary source for genomic continuity and structure in pre-Hispanic Central Mexico, including Sierra Gorda, Cañada de la Virgen, and ghost-ancestry claims.",
     topic: "Agriculture and Mesoamerica",
   },
   "kirch-2017": {
@@ -303,7 +303,7 @@ const sourceRecords = {
       "Ioannidis, A. G., et al. (2020). Native American gene flow into Polynesia predating Easter Island settlement. Nature, 583(7817), 572-577.",
     url: "https://doi.org/10.1038/s41586-020-2487-2",
     annotation:
-      "Primary source for Native American gene flow into eastern Polynesia before European contact.",
+      "Primary source for Native American gene flow into eastern Polynesia around 1200 CE, before European contact, with the closest inferred source related to Indigenous groups from present-day Colombia.",
     topic: "Pacific",
   },
 } as const satisfies Record<string, Source>;
