@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/drawer";
 import type { MigrationRoute, Site } from "@/data/types";
 import { formatYear } from "@/lib/formatYear";
+import SourcePills from "./SourcePills";
 
 export type DrawerSelection =
   | { kind: "route"; data: MigrationRoute }
@@ -46,6 +47,7 @@ export default function RouteDrawer({
               {paragraphs.map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
+              <SourcePills sourceIds={selection?.data.sourceIds} />
             </div>
             {selection.kind === "site" && selection.data.image && (
               <figure className="m-0">

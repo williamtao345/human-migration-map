@@ -17,6 +17,7 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "A single major dispersal event carried a subset of African populations into the Middle East, founding all non-African populations alive today. Genetic diversity decreases steadily with distance from Africa, consistent with serial founder effects as small groups broke off and moved further from the origin. Shortly after leaving Africa, modern humans interbred with Neanderthals in the Middle East, and all non-African populations today carry roughly 2% Neanderthal DNA.",
+    sourceIds: ["nielsen-2017", "reich-2018"],
   },
   {
     id: "sahul",
@@ -27,6 +28,7 @@ export const routes: MigrationRoute[] = [
     waypoints: ["sunda", "wallacea", "northernAustralia"],
     description:
       "Sahul, the ancient landmass connecting Australia, New Guinea, and Tasmania during lower sea levels, was reached by a single founding event shortly after humans first left Africa. Aboriginal Australians remained in high genetic isolation until recent times. Modern Melanesians carry roughly 3 to 6% Denisovan ancestry acquired through admixture in the Wallacea region during this period.",
+    sourceIds: ["malaspinas-2016", "nielsen-2017"],
   },
   {
     id: "south-asia",
@@ -51,6 +53,7 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "Modern humans spread rapidly along the southern coastlines of Asia, reaching Southeast Asia within a few thousand years of leaving Africa. This \"coastal express\" migration followed productive littoral environments and carried the ancestors of South Asian, Southeast Asian, and ultimately Australasian populations. The speed of this dispersal is consistent with a simple foraging lifestyle along the shore and the richness of marine and estuarine resources. The route bends inland through Chiang Mai (northern Thailand) to follow the mainland SE Asian land corridor between the Andaman Sea and the Gulf of Thailand rather than crossing open water.",
+    sourceIds: ["nielsen-2017", "reich-2018"],
   },
   {
     id: "east-asia",
@@ -66,6 +69,7 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "The southern coastal dispersal arrived in mainland Southeast Asia ~50 kya (south-asia route). From the broad mainland SE Asia / southern China homeland, the Ancient East Asian (AEA) lineage expanded inland and northward through the natural Tai–Shan–Yunnan upland corridor — branching here at Chiang Mai (northern Thailand) and anchored at Yunnan (interior southern China, near where deep East Eurasian branches like Longlin AGX and the Hoabinhian La368 are sampled) and Fuzhou (coastal Fujian, the Ancient Southern East Asian heartland of Liangdao and Qihe samples) — reaching the Beijing area by ~40 kya, directly sampled by Tianyuan Man at Zhoukoudian. The intermediate path is inferred; only Tianyuan provides a directly sequenced AEA genome along this trajectory.",
+    sourceIds: ["yang-2017", "fu-2014"],
   },
   {
     id: "north-asia",
@@ -81,6 +85,7 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "Ancient North Siberians (ANS) formed in north-central Asia from two ancestry sources: a West-Eurasian-related substrate (no specific migration path documented) and a Tianyuan-related East Asian inflow from the AEA region. This route traces the Tianyuan-related geneflow component, branching from the AEA homeland near Zhoukoudian northwestward into the Lake Baikal area, where it merged with the resident West-Eurasian-related lineage. ANS is sampled at Yana RHS (~31.6 kya); its descendants, the Ancient North Eurasians (ANE), are sampled at the Mal'ta boy (~24 kya). ANE later contributed substantially to both West Eurasian and Native American ancestry.",
+    sourceIds: ["sikora-2019", "raghavan-2014-malta", "yang-2017"],
   },
   {
     id: "ane-westward",
@@ -91,6 +96,7 @@ export const routes: MigrationRoute[] = [
     waypoints: ["maltaBaikal", "westSiberia", "uralsSteppe", "ponticSteppe"],
     description:
       "Ancient North Eurasians (ANE), best known from the Mal'ta boy (~24 kya) near Lake Baikal, spread westward across Siberia and the steppe after the Last Glacial Maximum. Their ancestry mixed with Western Hunter-Gatherers in Eastern Europe to form Eastern Hunter-Gatherers (EHG), the key northern component that later fused with Caucasus Hunter-Gatherers to produce Yamnaya steppe pastoralists. This westward gene flow is why Bronze Age steppe populations carry a distinctive Siberian ancestry unrelated to the earlier European farming wave.",
+    sourceIds: ["raghavan-2014-malta", "lazaridis-2014"],
   },
   {
     id: "europe-whg",
@@ -109,6 +115,7 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "Modern European ancestry derives from three major population waves. The first wave, Western Hunter-Gatherers (WHG), entered Europe via Anatolia and the Balkans beginning ~45 kya, surviving the Last Glacial Maximum in southern refugia before recolonizing the continent.",
+    sourceIds: ["lazaridis-2014", "haak-2015"],
   },
   {
     id: "europe-eef-danubian",
@@ -125,6 +132,7 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "The Danubian stream of Early European Farmers carried Neolithic agriculture from Anatolia through the Aegean and up the Danube into central Europe, crystallizing archaeologically as the Linearbandkeramik (LBK) culture. This inland farming wave largely replaced the pre-existing WHG populations, though significant admixture also occurred.",
+    sourceIds: ["lazaridis-2014", "haak-2015"],
   },
   {
     id: "europe-eef-cardial",
@@ -141,6 +149,7 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "The Mediterranean stream of Early European Farmers, the Cardial / Impressa culture, spread Neolithic agriculture along the northern Mediterranean coastline, reaching Iberia within a few centuries. Together with the Danubian wave, these EEF dispersals produced the Neolithic European gene pool.",
+    sourceIds: ["lazaridis-2014", "haak-2015"],
   },
   {
     id: "europe-yamnaya",
@@ -151,6 +160,7 @@ export const routes: MigrationRoute[] = [
     waypoints: ["ponticSteppe", "galicia", "centralEurope"],
     description:
       "Yamnaya steppe herders from the Pontic-Caspian steppe expanded into Europe ~4.5 kya, bringing horses, wheeled vehicles, and possibly Indo-European languages. This wave contributed a large fraction of modern European ancestry, especially in the north.",
+    sourceIds: ["haak-2015", "reich-2018"],
   },
   {
     id: "beringia",
@@ -161,6 +171,7 @@ export const routes: MigrationRoute[] = [
     waypoints: ["neSiberia", "beringStrait", "alaska"],
     description:
       "The Native American gene pool formed ~23 kya from Ancient East Asians and Ancient North Siberians. The ancestral population walked from Siberia to Alaska via the Bering Land Bridge, which may have served as a mild wetland refugium where the founding population remained isolated for several thousand years before expanding southward.",
+    sourceIds: ["raghavan-2015-americas", "moreno-mayar-2018"],
   },
   {
     id: "americas",
@@ -186,6 +197,7 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "The oldest accepted archaeological evidence dates to roughly 15 to 14 kya, with pre-Clovis sites including Monte Verde (Chile, 14.2 kya) and Page-Ladson (Florida, 14.45 kya). The first peoples traveled the Pacific coastal route, as the ice-free corridor was not viable until ~12.6 kya. Within ~2,000 years of arrival, populations reached the southern tip of South America.",
+    sourceIds: ["halligan-2016", "dillehay-2008", "pedersen-2016"],
   },
   {
     id: "north-american-east",
@@ -206,6 +218,7 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "After the first peoples reached the Americas via the Pacific coast, the Northern Branch of Ancestral Native Americans expanded inland once the Ice-Free Corridor between the retreating Cordilleran and Laurentide ice sheets fully opened around 13.8 kya. From the Alberta plains they spread south and east across the continent, ancestral to Algonquian, Na-Dene, Salishan, and Tsimshian speakers. Eastern pre-Clovis sites such as Meadowcroft Rockshelter (Pennsylvania), Cactus Hill (Virginia), Topper (South Carolina), and Page-Ladson (Florida) show people were already across the continent by 14 to 16 kya, and a Proto-Algic dialect chain stretched from the northern Plains across the Canadian Shield by roughly 8 kya, giving rise to the Shield Archaic cultures that reached the Atlantic coast.",
+    sourceIds: ["moreno-mayar-2018", "pedersen-2016", "halligan-2016"],
   },
   {
     id: "paleo-eskimo",
@@ -227,6 +240,7 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "An independent migration from northeast Siberia and Chukotka across Beringia roughly 5,000 years ago, genetically distinct from both the earlier First Peoples and the later Inuit. Bearers of the Arctic Small Tool tradition (Pre-Dorset, Saqqaq, and later Dorset cultures) entered North America via the northwest Alaska coast (Cape Krusenstern, ~4,500 BP), spread rapidly across the High Arctic Archipelago, and crossed Smith Sound into Greenland — reaching the Saqqaq heartland around Disko Bay by ~4,500 years ago. The ~4,000-year-old Saqqaq individual sequenced from this region is the founding genetic evidence for the Paleo-Eskimo lineage. They occupied the Arctic for some 4,000 years before being replaced by the expanding Thule (Inuit) ~700 years ago, leaving no living descendants.",
+    sourceIds: ["rasmussen-2010-saqqaq", "raghavan-2014-arctic"],
   },
   {
     id: "austronesian",
@@ -247,6 +261,7 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "The Austronesian expansion began with farmers leaving Taiwan ~5 kya, spreading through the Philippines and island Southeast Asia into Near Oceania. They reached Remote Oceania as the Lapita culture, founding populations in Fiji, Tonga, and Samoa. This is one of the largest maritime expansions in human history.",
+    sourceIds: ["kirch-2017", "lipson-2018"],
   },
   {
     id: "mesoamerica-maize",
@@ -257,6 +272,7 @@ export const routes: MigrationRoute[] = [
     waypoints: ["balsasValley", "oaxaca", "guatemala", "panama", "bogota"],
     description:
       "Maize was domesticated from teosinte in the Central Balsas River Valley of Guerrero, Mexico, by ~8,700 years ago (Xihuatoxtla Shelter). Cultivation then spread south through Mesoamerica, reaching Panama by ~7,600 cal BP and northwestern South America by ~6,000 cal BP. Maize did not become a dietary staple until roughly 4,000 years ago, and the population expansion ~5 kya seen in ancient DNA from central Mexico is generally linked to this transition. The maize wave is one of the New World's defining agricultural dispersals, comparable to the Yangtze rice expansion in East Asia.",
+    sourceIds: ["piperno-2009", "matsuoka-2002"],
   },
   {
     id: "polynesia-americas",
@@ -267,6 +283,7 @@ export const routes: MigrationRoute[] = [
     waypoints: ["marquesas", "tumaco"],
     description:
       "Around 1150 CE, Polynesian voyagers and Native Americans met somewhere in the eastern Pacific, the first known contact between the two worlds. Ioannidis et al. (2020) found Native American ancestry in present-day eastern Polynesians (Marquesas, Mangareva, Palliser, and Rapa Nui) most closely related to the Zenú of present-day Colombia, with a single admixture pulse dated to ~1150 CE — predating the settlement of Rapa Nui. Whether Polynesian seafarers reached the South American coast or whether Native Americans rafted west remains debated, but the genetic signal sits firmly before any European contact.",
+    sourceIds: ["ioannidis-2020"],
   },
   {
     id: "polynesia",
@@ -285,5 +302,6 @@ export const routes: MigrationRoute[] = [
     ],
     description:
       "Polynesian seafarers expanded eastward across the Pacific from Samoa through island-hopping migrations, each founded by small groups of 30 to 200 individuals. Serial bottlenecks caused genetic diversity to decline at each step. Genetic evidence suggests contact between Polynesians and Native Americans around ~1200 CE.",
+    sourceIds: ["kirch-2017", "ioannidis-2020"],
   },
 ];
