@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import Threads from "./Threads";
 
 export default function LandingOverlay({
   onStart,
@@ -33,70 +34,13 @@ export default function LandingOverlay({
       aria-modal="true"
       aria-labelledby="landing-title"
     >
-      <svg
-        aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.07]"
-        viewBox="0 0 1200 800"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        <defs>
-          <pattern
-            id="landing-grid"
-            width="48"
-            height="48"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M 48 0 L 0 0 0 48"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="0.5"
-            />
-          </pattern>
-        </defs>
-        <rect width="1200" height="800" fill="url(#landing-grid)" />
-      </svg>
-
-      <svg
-        aria-hidden
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        viewBox="0 0 1200 800"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        <path
-          d="M 180 540 C 320 360, 520 240, 720 280 S 1020 460, 1080 300"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1"
-          strokeDasharray="2 6"
-          strokeLinecap="round"
-          className="text-foreground/30"
-          style={{
-            strokeDashoffset: mounted ? 0 : 800,
-            transition: "stroke-dashoffset 1800ms ease-out 200ms",
-          }}
-          pathLength={800}
+      <div className="absolute inset-0 z-0 translate-y-20 opacity-55 [mask-image:radial-gradient(ellipse_at_center,black_0%,black_42%,transparent_82%)] sm:translate-y-20">
+        <Threads
+          color={[0.16, 0.16, 0.16]}
+          amplitude={0.75}
+          distance={0.5}
         />
-        {[
-          { cx: 180, cy: 540, d: 0 },
-          { cx: 720, cy: 280, d: 700 },
-          { cx: 1080, cy: 300, d: 1300 },
-        ].map((p, i) => (
-          <circle
-            key={i}
-            cx={p.cx}
-            cy={p.cy}
-            r="3"
-            className="fill-foreground/40"
-            style={{
-              opacity: mounted ? 1 : 0,
-              transform: mounted ? "scale(1)" : "scale(0)",
-              transformOrigin: `${p.cx}px ${p.cy}px`,
-              transition: `opacity 400ms ease-out ${p.d}ms, transform 600ms cubic-bezier(.34,1.56,.64,1) ${p.d}ms`,
-            }}
-          />
-        ))}
-      </svg>
+      </div>
 
       <div
         className={[
@@ -141,8 +85,8 @@ export default function LandingOverlay({
               className="transition-transform duration-300 group-hover:translate-x-0.5"
             />
           </Button>
-          <span className="text-[0.7rem] uppercase tracking-[0.2em] text-muted-foreground/70">
-            Press to start the timeline
+          <span className="text-[0.7rem] uppercase tracking-[0.2em] text-black">
+            Click to open the interactive map
           </span>
         </div>
       </div>
